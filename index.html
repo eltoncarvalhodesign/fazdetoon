@@ -1,0 +1,1616 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Fazdetoon — Aprenda a criar personagens incríveis do zero. Método passo a passo para dominar a criação de personagens cartoon com identidade única." />
+  <title>Fazdetoon — Crie Personagens Incríveis do Zero</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Fredoka:wght@300;400;500;600;700&family=Nunito:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+
+  <style>
+  /* ═══════════════════════════════════════════════════════
+     FAZDETOON — Sóbrio, limpo, profissional
+     Referência visual: Osome.com
+  ═══════════════════════════════════════════════════════ */
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:           #FDFCF8;
+    --bg-alt:       #F5F1E8;
+    --bg-dark:      #1C1814;
+    --bg-dark-alt:  #252018;
+
+    --text:         #1C1814;
+    --text-2:       #3D3529;
+    --text-muted:   #6B6055;
+    --text-light:   #A09080;
+    --text-inv:     #F5F1E8;
+
+    --accent:       #F5D000;
+    --accent-dark:  #C8AA00;
+    --accent-soft:  rgba(245,208,0,.12);
+
+    --border:       #E4DDD0;
+    --border-dark:  #2E2820;
+
+    --green:        #22A06B;
+    --red-soft:     #C94040;
+
+    --font-brand:   'Bangers', cursive;
+    --font-head:    'Fredoka', sans-serif;
+    --font-body:    'Nunito', sans-serif;
+
+    --radius-sm:    .5rem;
+    --radius-md:    .875rem;
+    --radius-lg:    1.25rem;
+    --radius-xl:    1.75rem;
+    --radius-full:  999px;
+
+    --shadow-xs:    0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+    --shadow-sm:    0 2px 8px rgba(0,0,0,.06), 0 1px 3px rgba(0,0,0,.04);
+    --shadow-md:    0 4px 16px rgba(0,0,0,.07), 0 2px 6px rgba(0,0,0,.04);
+    --shadow-lg:    0 8px 32px rgba(0,0,0,.09), 0 4px 12px rgba(0,0,0,.05);
+
+    --ease:         cubic-bezier(0.4, 0, 0.2, 1);
+    --ease-out:     cubic-bezier(0, 0, 0.2, 1);
+    --ease-spring:  cubic-bezier(0.34, 1.4, 0.64, 1);
+  }
+
+  html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+
+  body {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.65;
+    color: var(--text);
+    background: var(--bg);
+    overflow-x: hidden;
+  }
+
+  img, svg { max-width: 100%; display: block; }
+  a { color: inherit; text-decoration: none; }
+  button { cursor: pointer; border: none; background: none; font: inherit; }
+  ul { list-style: none; }
+
+  /* ── Layout ── */
+  .wrap     { width: 100%; max-width: 1160px; margin: 0 auto; padding: 0 2rem; }
+  .wrap-sm  { width: 100%; max-width: 760px;  margin: 0 auto; padding: 0 2rem; }
+  .wrap-md  { width: 100%; max-width: 960px;  margin: 0 auto; padding: 0 2rem; }
+
+  /* ── Reveal ── */
+  .reveal {
+    opacity: 0; transform: translateY(20px);
+    transition: opacity .6s var(--ease-out), transform .6s var(--ease-out);
+  }
+  .reveal.visible { opacity: 1; transform: none; }
+  .reveal-l { transform: translateX(-20px); }
+  .reveal-r { transform: translateX(20px); }
+  .reveal-l.visible, .reveal-r.visible { transform: none; }
+  .d1 { transition-delay: 80ms; }
+  .d2 { transition-delay: 160ms; }
+  .d3 { transition-delay: 240ms; }
+  .d4 { transition-delay: 320ms; }
+
+  /* ── Buttons ── */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+    font-family: var(--font-head);
+    font-size: 1rem; font-weight: 600; line-height: 1;
+    padding: .85rem 2rem;
+    border-radius: var(--radius-full);
+    border: 1.5px solid transparent;
+    cursor: pointer; white-space: nowrap;
+    transition: background .18s var(--ease), color .18s var(--ease),
+                border-color .18s var(--ease), box-shadow .18s var(--ease),
+                transform .18s var(--ease-spring);
+  }
+  .btn:hover  { transform: translateY(-1px); }
+  .btn:active { transform: translateY(0); }
+
+  .btn-primary {
+    background: var(--accent); color: var(--text);
+    border-color: var(--accent-dark);
+    box-shadow: 0 2px 0 var(--accent-dark), var(--shadow-sm);
+  }
+  .btn-primary:hover {
+    background: #f0c800;
+    box-shadow: 0 3px 0 var(--accent-dark), var(--shadow-md);
+  }
+
+  .btn-dark {
+    background: var(--bg-dark); color: var(--text-inv);
+    border-color: var(--bg-dark);
+    box-shadow: var(--shadow-sm);
+  }
+  .btn-dark:hover { background: var(--bg-dark-alt); box-shadow: var(--shadow-md); }
+
+  .btn-ghost {
+    background: transparent; color: var(--text-muted);
+    border-color: var(--border);
+  }
+  .btn-ghost:hover { border-color: var(--text-muted); color: var(--text); }
+
+  .btn-ghost-inv {
+    background: transparent; color: rgba(255,255,255,.7);
+    border-color: rgba(255,255,255,.2);
+  }
+  .btn-ghost-inv:hover { color: var(--text-inv); border-color: rgba(255,255,255,.5); }
+
+  .btn-lg  { font-size: 1.05rem; padding: 1rem 2.5rem; }
+  .btn-xl  { font-size: 1.1rem;  padding: 1.1rem 2.75rem; }
+  .btn-sm  { font-size: .875rem; padding: .65rem 1.5rem; }
+
+  /* ── Cards ── */
+  .card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem;
+    box-shadow: var(--shadow-xs);
+    transition: box-shadow .2s var(--ease), transform .2s var(--ease-spring), border-color .2s;
+  }
+  .card:hover { box-shadow: var(--shadow-lg); transform: translateY(-2px); border-color: #d0c8b8; }
+
+  .card-white {
+    background: #FFFFFF;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem;
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow .2s var(--ease), transform .2s var(--ease-spring);
+  }
+  .card-white:hover { box-shadow: var(--shadow-lg); transform: translateY(-2px); }
+
+  /* ── Label / Tag ── */
+  .label {
+    display: inline-flex; align-items: center; gap: .4rem;
+    font-family: var(--font-body);
+    font-size: .72rem; font-weight: 700;
+    letter-spacing: .1em; text-transform: uppercase;
+    padding: .35rem .85rem;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    background: var(--bg);
+  }
+  .label-accent { background: var(--accent-soft); border-color: rgba(245,208,0,.3); color: #7A6400; }
+  .label-dark   { background: var(--bg-dark); border-color: var(--bg-dark); color: var(--text-inv); }
+  .label-green  { background: rgba(34,160,107,.08); border-color: rgba(34,160,107,.2); color: #1a7a52; }
+
+  /* ── Section structure ── */
+  .sec { padding: 6rem 0; }
+  .sec-sm { padding: 4rem 0; }
+  .sec-lg { padding: 8rem 0; }
+
+  .sec-head { margin-bottom: 3.5rem; }
+  .sec-head.center { text-align: center; }
+  .sec-head.center .sec-sub { margin: 0 auto; }
+
+  .sec-title {
+    font-family: var(--font-head);
+    font-size: clamp(1.85rem, 4vw, 2.75rem);
+    font-weight: 700; line-height: 1.2;
+    color: var(--text); margin-bottom: .875rem;
+    letter-spacing: -.01em;
+  }
+  .sec-sub {
+    font-size: 1.05rem; line-height: 1.75;
+    color: var(--text-muted); max-width: 58ch;
+  }
+
+  /* ── Divider ── */
+  .divider { width: 100%; height: 1px; background: var(--border); }
+
+  /* ── Check list ── */
+  .clist { display: flex; flex-direction: column; gap: .85rem; }
+  .clist li { display: flex; align-items: flex-start; gap: .85rem; font-size: .97rem; line-height: 1.6; color: var(--text-2); }
+  .ci {
+    width: 20px; height: 20px; min-width: 20px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: .65rem; font-weight: 800;
+    margin-top: .2rem; flex-shrink: 0;
+  }
+  .ci-yes { background: var(--green);    color: #fff; }
+  .ci-no  { background: var(--red-soft); color: #fff; }
+
+  /* ── Accordion ── */
+  .faq-item {
+    border-bottom: 1px solid var(--border);
+    transition: border-color .2s;
+  }
+  .faq-item:first-child { border-top: 1px solid var(--border); }
+
+  .faq-q {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.35rem 0;
+    cursor: pointer; user-select: none;
+    font-family: var(--font-head);
+    font-size: 1.05rem; font-weight: 600; color: var(--text);
+    transition: color .15s;
+    gap: 1.5rem;
+  }
+  .faq-q:hover { color: var(--text-muted); }
+
+  .faq-icon {
+    width: 24px; height: 24px; min-width: 24px;
+    border: 1.5px solid var(--border);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: .9rem; font-weight: 700; color: var(--text-muted);
+    transition: transform .3s var(--ease), background .2s, border-color .2s;
+    flex-shrink: 0;
+  }
+  .faq-item.open .faq-icon {
+    transform: rotate(45deg);
+    background: var(--accent); border-color: var(--accent-dark); color: var(--text);
+  }
+
+  .faq-body-wrap { max-height: 0; overflow: hidden; transition: max-height .35s var(--ease-out); }
+  .faq-item.open .faq-body-wrap { max-height: 400px; }
+
+  .faq-body {
+    padding-bottom: 1.5rem;
+    font-size: .97rem; color: var(--text-muted); line-height: 1.75;
+  }
+
+  /* ── Countdown ── */
+  .countdown { display: flex; align-items: center; gap: .6rem; }
+  .cd-unit { text-align: center; }
+  .cd-num {
+    font-family: var(--font-brand);
+    font-size: 2.25rem; letter-spacing: .03em;
+    background: var(--bg-dark); color: var(--accent);
+    border-radius: var(--radius-sm);
+    padding: .2rem .7rem;
+    min-width: 3ch; display: inline-block; line-height: 1.15;
+  }
+  .cd-label { font-size: .6rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--text-light); margin-top: .25rem; }
+  .cd-sep { font-family: var(--font-brand); font-size: 1.75rem; color: var(--text-light); margin-bottom: 1rem; }
+
+  /* Misc */
+  .text-center { text-align: center; }
+  .text-muted  { color: var(--text-muted); }
+  .mx-auto     { margin-left: auto; margin-right: auto; }
+  .w-full      { width: 100%; }
+
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     NAV
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+  #nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 9000;
+    background: rgba(253,252,248,.92);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid transparent;
+    padding: 1.1rem 0;
+    transition: border-color .2s, padding .2s;
+  }
+  #nav.scrolled {
+    border-color: var(--border);
+    padding: .85rem 0;
+  }
+  .nav-inner {
+    display: flex; align-items: center; justify-content: space-between; gap: 2rem;
+  }
+  .nav-logo {
+    font-family: var(--font-brand);
+    font-size: 1.6rem; letter-spacing: .05em;
+    color: var(--text); line-height: 1;
+    display: flex; align-items: center; gap: .45rem;
+  }
+  .nav-logo .dot {
+    width: 8px; height: 8px;
+    background: var(--accent); border-radius: 50%;
+    box-shadow: 0 0 0 2px var(--accent-dark);
+  }
+  .nav-links {
+    display: flex; align-items: center; gap: 2.25rem;
+  }
+  .nav-links a {
+    font-size: .9rem; font-weight: 600; color: var(--text-muted);
+    transition: color .15s;
+  }
+  .nav-links a:hover { color: var(--text); }
+
+  #nav-toggle { display: none; flex-direction: column; gap: 5px; padding: .4rem; }
+  #nav-toggle span { display: block; width: 22px; height: 2px; background: var(--text); border-radius: 2px; }
+
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    #nav-toggle { display: flex; }
+    #nav-menu.open {
+      display: flex; flex-direction: column;
+      position: fixed; inset: 0;
+      background: var(--bg);
+      align-items: center; justify-content: center;
+      gap: 2.5rem; z-index: 9999;
+    }
+    #nav-menu.open a { font-size: 1.75rem; color: var(--text); }
+  }
+
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     HERO
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+  #hero {
+    padding: 9rem 0 6.5rem;
+    background: var(--bg);
+    position: relative; overflow: hidden;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* Subtle warm gradient blob */
+  #hero::before {
+    content: '';
+    position: absolute; top: -20%; right: -10%;
+    width: 55vmax; height: 55vmax;
+    background: radial-gradient(circle, rgba(245,208,0,.1) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 5rem; align-items: center;
+    position: relative; z-index: 1;
+  }
+
+  .hero-label { margin-bottom: 1.5rem; }
+
+  .hero-title {
+    font-family: var(--font-head);
+    font-size: clamp(2.5rem, 5.5vw, 4rem);
+    font-weight: 700; line-height: 1.15;
+    letter-spacing: -.02em;
+    color: var(--text);
+    margin-bottom: 1.5rem;
+  }
+  .hero-title em { font-style: normal; color: #7A6400; }
+
+  .hero-sub {
+    font-size: 1.1rem; color: var(--text-muted);
+    line-height: 1.75; max-width: 50ch;
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-ctas {
+    display: flex; align-items: center; gap: 1rem;
+    flex-wrap: wrap; margin-bottom: 3rem;
+  }
+
+  .hero-trust {
+    display: flex; align-items: center; gap: 1.75rem; flex-wrap: wrap;
+  }
+  .trust-item {
+    display: flex; align-items: center; gap: .4rem;
+    font-size: .85rem; font-weight: 600; color: var(--text-light);
+  }
+  .trust-item strong { color: var(--text-muted); }
+
+  /* Hero visual */
+  .hero-visual { position: relative; }
+
+  /* Cat image — sem container, preenche o lado direito */
+  .hero-cat-img {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin-bottom: -4rem; /* ancora base do desenho no limite da seção */
+    filter: drop-shadow(0 24px 48px rgba(0,0,0,.18));
+  }
+
+  /* Floating badges */
+  .hero-badge {
+    position: absolute;
+    background: #FFFFFF;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: .7rem 1rem;
+    box-shadow: var(--shadow-md);
+    font-family: var(--font-head);
+    font-size: .82rem; font-weight: 600;
+    color: var(--text);
+    white-space: nowrap;
+    z-index: 3;
+  }
+  .hero-badge .badge-icon { font-size: 1.1rem; }
+  .hero-badge-1 { top: -14px; left: -18px; display: flex; align-items: center; gap: .5rem; }
+  .hero-badge-2 { bottom: -14px; right: -14px; display: flex; align-items: center; gap: .5rem; }
+
+  @media (max-width: 860px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 3.5rem; }
+    .hero-visual { max-width: 380px; margin: 0 auto; width: 100%; }
+    .hero-card { aspect-ratio: 4/3.5; }
+  }
+  @media (max-width: 480px) {
+    #hero { padding: 8rem 0 5rem; }
+    .hero-badge { display: none; }
+  }
+
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     PROOF BAR
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+  #proof {
+    background: var(--bg-alt);
+    border-bottom: 1px solid var(--border);
+    padding: 2.25rem 0;
+  }
+  .proof-inner {
+    display: flex; align-items: center; justify-content: center;
+    gap: 3.5rem; flex-wrap: wrap;
+  }
+  .proof-stat { text-align: center; }
+  .proof-num {
+    font-family: var(--font-brand);
+    font-size: 2.75rem; color: var(--text); line-height: 1; letter-spacing: .03em;
+  }
+  .proof-label {
+    font-size: .7rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .1em;
+    color: var(--text-light); margin-top: .3rem;
+  }
+  .proof-sep { width: 1px; height: 44px; background: var(--border); }
+  @media (max-width: 480px) { .proof-sep { display: none; } .proof-inner { gap: 2rem; } }
+
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     PAIN
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+  #pain { background: var(--bg); }
+
+  .pain-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;
+  }
+  .pain-card {
+    background: var(--bg-alt);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    display: flex; align-items: flex-start; gap: .85rem;
+    transition: border-color .2s, box-shadow .2s, transform .2s var(--ease-spring);
+  }
+  .pain-card:hover { border-color: #c8c0b0; box-shadow: var(--shadow-md); transform: translateY(-2px); }
+  .pain-emoji { font-size: 1.35rem; flex-shrink: 0; margin-top: .1rem; }
+  .pain-text { font-size: .95rem; color: var(--text-2); line-height: 1.55; font-weight: 500; }
+
+  @media (max-width: 860px) { .pain-grid { grid-template-columns: repeat(2,1fr); } }
+  @media (max-width: 540px) { .pain-grid { grid-template-columns: 1fr; } }
+
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     SOLUTION
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+  #solution {
+    background: var(--bg-dark);
+    color: var(--text-inv);
+  }
+  .solution-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;
+  }
+  .solution-title {
+    font-family: var(--font-head);
+    font-size: clamp(2rem, 4.5vw, 3rem);
+    font-weight: 700; line-height: 1.2; letter-spacing: -.015em;
+    color: var(--text-inv); margin-bottom: 1.25rem;
+  }
+  .solution-title span { color: var(--accent); }
+  .solution-body { font-size: 1.05rem; color: rgba(255,255,255,.6); line-height: 1.75; margin-bottom: 2rem; }
+  .solution-pillars { display: flex; flex-direction: column; gap: .85rem; }
+  .pillar {
+    display: flex; align-items: center; gap: 1.25rem;
+    background: rgba(255,255,255,.05);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: var(--radius-md);
+    padding: 1rem 1.35rem;
+    transition: background .2s;
+  }
+  .pillar:hover { background: rgba(255,255,255,.08); }
+  .pillar-n {
+    font-family: var(--font-brand);
+    font-size: 1.75rem; color: rgba(255,255,255,.18); line-height: 1; min-width: 2ch;
+  }
+  .pillar-t { font-size: .97rem; color: rgba(255,255,255,.75); font-weight: 500; line-height: 1.45; }
+
+  @media (max-width: 768px) { .solution-grid { grid-template-columns: 1fr; gap: 3rem; } }
+
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     MODULES
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+  #modules { background: var(--bg-alt); }
+
+  .modules-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;
+  }
+  .mod-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem;
+    position: relative; overflow: hidden;
+    transition: box-shadow .2s, transform .2s var(--ease-spring), border-color .2s;
+  }
+  .mod-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-3px); border-color: #c8c0b0; }
+
+  .mod-card.bonus {
+    background: var(--bg-dark);
+    border-color: var(--border-dark);
+    color: var(--text-inv);
+  }
+  .mod-card.bonus:hover { border-color: #3a3028; }
+  .mod-card.bonus .mod-tag { color: rgba(255,255,255,.35); }
+  .mod-card.bonus .mod-name { color: var(--text-inv); }
+  .mod-card.bonus .mod-desc { color: rgba(255,255,255,.5); }
+  .mod-card.bonus .mod-count { color: rgba(255,255,255,.25); }
+
+  .mod-bg-num {
+    position: absolute; top: 1rem; right: 1.25rem;
+    font-family: var(--font-brand);
+    font-size: 4.5rem; color: rgba(0,0,0,.04); line-height: 1;
+    user-select: none; letter-spacing: .02em;
+  }
+  .mod-card.bonus .mod-bg-num { color: rgba(255,255,255,.04); }
+
+  .mod-icon { font-size: 2rem; margin-bottom: 1rem; display: block; }
+  .mod-tag {
+    font-size: .65rem; font-weight: 700; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--text-light);
+    display: block; margin-bottom: .3rem;
+  }
+  .mod-name {
+    font-family: var(--font-head); font-size: 1.05rem; font-weight: 700;
+    color: var(--text); margin-bottom: .75rem; line-height: 1.35;
+  }
+  .mod-desc { font-size: .88rem; color: var(--text-muted); line-height: 1.6; }
+  .mod-count {
+    font-size: .7rem; font-weight: 700; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--border); display: block; margin-top: 1.1rem;
+  }
+  .bonus-label {
+    display: inline-flex; background: var(--accent); color: var(--text);
+    font-size: .6rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase;
+    padding: .2rem .65rem; border-radius: var(--radius-full);
+    margin-bottom: .5rem;
+  }
+
+  @media (max-width: 900px) { .modules-grid { grid-template-columns: repeat(2,1fr); } }
+  @media (max-width: 560px) { .modules-grid { grid-template-columns: 1fr; } }
+
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     FOR WHOM
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+  #for-whom { background: var(--bg); }
+
+  .whom-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .whom-panel {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    padding: 2.25rem;
+    box-shadow: var(--shadow-sm);
+  }
+  .whom-panel.yes { border-top: 3px solid var(--green); }
+  .whom-panel.no  { border-top: 3px solid var(--red-soft); }
+  .whom-head { display: flex; align-items: center; gap: .75rem; margin-bottom: 1.75rem; }
+  .whom-head-icon { font-size: 1.5rem; }
+  .whom-head-title { font-family: var(--font-head); font-size: 1.2rem; font-weight: 700; }
+  .whom-panel.yes .whom-head-title { color: var(--green); }
+  .whom-panel.no  .whom-head-title { color: var(--red-soft); }
+  @media (max-width: 660px) { .whom-grid { grid-template-columns: 1fr; } }
+
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     TEACHER
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+  #teacher { background: var(--bg-alt); }
+
+  .teacher-grid { display: grid; grid-template-columns: auto 1fr; gap: 5rem; align-items: center; }
+  .teacher-photo {
+    width: 320px; height: 400px;
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden; position: relative;
+    flex-shrink: 0;
+  }
+  .teacher-photo img {
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center top;
+    display: block;
+  }
+  .teacher-badge {
+    position: absolute; bottom: 1rem; left: 50%; transform: translateX(-50%);
+    background: rgba(253,252,248,.95);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: .6rem 1rem; font-family: var(--font-head);
+    font-weight: 600; font-size: .8rem;
+    box-shadow: var(--shadow-sm); color: var(--text); line-height: 1.4;
+    white-space: nowrap;
+  }
+  .teacher-name {
+    font-family: var(--font-brand);
+    font-size: clamp(3rem, 7vw, 5rem);
+    color: var(--text); letter-spacing: .03em; line-height: 1; margin-bottom: .3rem;
+  }
+  .teacher-role {
+    font-size: 1rem; color: var(--text-muted); font-weight: 500; margin-bottom: 1.75rem;
+  }
+  .teacher-bio { font-size: 1rem; color: var(--text-muted); line-height: 1.75; margin-bottom: .875rem; }
+  .teacher-stats { display: flex; gap: 2.5rem; flex-wrap: wrap; margin-top: 2rem; }
+  .t-stat-num {
+    font-family: var(--font-brand); font-size: 2.5rem; color: var(--text); line-height: 1; letter-spacing: .03em;
+  }
+  .t-stat-label {
+    font-size: .65rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .1em; color: var(--text-light); margin-top: .25rem;
+  }
+  @media (max-width: 768px) {
+    .teacher-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .teacher-photo { width: 100%; max-width: 320px; height: 340px; margin: 0 auto; }
+    .teacher-stats { gap: 2rem; }
+  }
+
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     TESTIMONIALS — infinite scroll columns
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+  #testimonials { background: var(--bg); }
+
+  /* 3-col stage */
+  .testi-stage {
+    display: flex;
+    justify-content: center;
+    gap: 1.25rem;
+    max-height: 720px;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to bottom, transparent, black 12%, black 88%, transparent);
+    mask-image:         linear-gradient(to bottom, transparent, black 12%, black 88%, transparent);
+  }
+
+  /* each column */
+  .testi-col { flex: 0 0 300px; overflow: hidden; }
+  .testi-col:nth-child(2) { display: none; }
+  .testi-col:nth-child(3) { display: none; }
+  @media (min-width: 700px)  { .testi-col:nth-child(2) { display: block; } }
+  @media (min-width: 1040px) { .testi-col:nth-child(3) { display: block; } }
+
+  /* scrolling track — keyframe is set per column via inline style */
+  @keyframes testi-scroll {
+    to { transform: translateY(-50%); }
+  }
+  .testi-track {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    padding-bottom: 1.25rem; /* gap after last card before loop */
+    animation: testi-scroll linear infinite;
+  }
+  .testi-track:hover { animation-play-state: paused; }
+
+  /* card */
+  .testi-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    box-shadow: var(--shadow-sm);
+    transition: transform .3s var(--ease-spring), box-shadow .3s var(--ease);
+    cursor: default;
+    width: 300px;
+  }
+  .testi-card:hover {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 0 24px 48px rgba(0,0,0,.1), 0 8px 16px rgba(0,0,0,.05);
+  }
+  .testi-stars { color: var(--accent-dark); font-size: .9rem; letter-spacing: 1px; margin-bottom: .85rem; }
+  .testi-quote {
+    font-size: .92rem; color: var(--text-2); line-height: 1.7;
+    margin-bottom: 1.25rem; font-style: italic;
+  }
+  .testi-author { display: flex; align-items: center; gap: .75rem; }
+  .testi-avatar {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+    border: 2px solid var(--border);
+    transition: border-color .2s;
+  }
+  .testi-card:hover .testi-avatar { border-color: var(--accent); }
+  .testi-name { font-family: var(--font-head); font-weight: 700; font-size: .88rem; color: var(--text); }
+  .testi-role { font-size: .73rem; color: var(--text-light); margin-top: 1px; }
+
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     BONUSES
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+  #bonuses { background: var(--bg-alt); }
+  .bonus-list { display: flex; flex-direction: column; gap: .75rem; }
+  .bonus-row {
+    display: flex; align-items: center; gap: 1.25rem;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem 1.5rem;
+    box-shadow: var(--shadow-xs);
+    transition: box-shadow .2s, transform .2s var(--ease-spring), border-color .2s;
+  }
+  .bonus-row:hover { box-shadow: var(--shadow-md); transform: translateY(-1px); border-color: #c8c0b0; }
+  .bonus-row-icon { font-size: 2rem; flex-shrink: 0; }
+  .bonus-row-name { font-family: var(--font-head); font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: .15rem; }
+  .bonus-row-desc { font-size: .85rem; color: var(--text-muted); line-height: 1.5; }
+  .bonus-row-val { font-family: var(--font-brand); font-size: 1.85rem; color: var(--text-light); letter-spacing: .03em; flex-shrink: 0; white-space: nowrap; }
+  .bonus-total-bar {
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+    background: var(--bg-dark); color: var(--text-inv);
+    border: 1px solid var(--border-dark);
+    border-radius: var(--radius-lg);
+    padding: 1.35rem 1.5rem;
+    margin-top: 1rem;
+  }
+  .bonus-total-label { font-family: var(--font-head); font-size: 1rem; font-weight: 600; color: rgba(255,255,255,.65); }
+  .bonus-total-num { font-family: var(--font-brand); font-size: 2.25rem; color: var(--accent); letter-spacing: .03em; }
+
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     PRICING
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+  #pricing {
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+  }
+  .pricing-card {
+    max-width: 540px; margin: 0 auto;
+    background: #ffffff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+  }
+
+  .pricing-top {
+    padding: 2.25rem 2.5rem 2rem;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg-alt);
+    text-align: center;
+  }
+  .pricing-plan-label {
+    font-size: .7rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--text-light); margin-bottom: .5rem;
+  }
+  .pricing-plan-name {
+    font-family: var(--font-head); font-size: 1.45rem; font-weight: 700; color: var(--text);
+  }
+
+  .pricing-body { padding: 2.25rem 2.5rem; }
+
+  .price-block {
+    text-align: center; padding: 1.75rem 0;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 2rem;
+  }
+  .price-old {
+    font-size: .8rem; font-weight: 700; color: var(--text-light);
+    text-decoration: line-through; letter-spacing: .06em; text-transform: uppercase;
+    margin-bottom: .4rem;
+  }
+  .price-offer-tag {
+    display: inline-flex;
+    background: rgba(34,160,107,.1); color: var(--green);
+    font-size: .7rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase;
+    padding: .25rem .75rem; border-radius: var(--radius-full);
+    border: 1px solid rgba(34,160,107,.2);
+    margin-bottom: .875rem;
+  }
+  .price-main {
+    display: flex; align-items: flex-start; justify-content: center; gap: .25rem; line-height: 1;
+  }
+  .price-currency { font-family: var(--font-head); font-size: 1.5rem; font-weight: 700; margin-top: .6rem; color: var(--text); }
+  .price-value {
+    font-family: var(--font-brand);
+    font-size: clamp(5rem, 12vw, 7rem);
+    color: var(--text); letter-spacing: .02em;
+  }
+  .price-note { font-size: .82rem; color: var(--text-light); margin-top: .6rem; }
+
+  .includes-label {
+    font-size: .68rem; font-weight: 800; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--text-light);
+    margin-bottom: .875rem;
+  }
+
+  .pricing-cta { width: 100%; font-size: 1.05rem; margin-top: 1.75rem; display: flex; }
+  .pricing-safe {
+    text-align: center; margin-top: 1.1rem;
+    font-size: .8rem; color: var(--text-light); line-height: 1.6;
+  }
+
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     GUARANTEE
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+  #guarantee {
+    background: var(--bg-alt);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .guarantee-inner {
+    display: grid; grid-template-columns: auto 1fr; gap: 3.5rem; align-items: center;
+    max-width: 760px; margin: 0 auto;
+  }
+  .guarantee-icon {
+    width: 120px; height: 120px; border-radius: 50%;
+    background: rgba(34,160,107,.08);
+    border: 2px solid rgba(34,160,107,.2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 3.5rem; flex-shrink: 0;
+  }
+  .guarantee-title {
+    font-family: var(--font-head); font-size: 1.75rem; font-weight: 700;
+    color: var(--green); margin-bottom: .6rem; letter-spacing: -.01em;
+  }
+  .guarantee-text { font-size: .97rem; color: var(--text-muted); line-height: 1.75; margin-bottom: .5rem; }
+  @media (max-width: 600px) {
+    .guarantee-inner { grid-template-columns: 1fr; text-align: center; }
+    .guarantee-icon { margin: 0 auto; }
+  }
+
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     FAQ
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+  #faq { background: var(--bg); }
+
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     FINAL CTA
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+  #final-cta {
+    background: var(--bg-dark); color: var(--text-inv);
+    text-align: center; position: relative; overflow: hidden;
+  }
+  #final-cta::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(245,208,0,.08) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .final-title {
+    font-family: var(--font-head);
+    font-size: clamp(2rem, 5vw, 3.25rem);
+    font-weight: 700; line-height: 1.2; letter-spacing: -.02em;
+    margin-bottom: 1.25rem; color: var(--text-inv);
+    position: relative; z-index: 1;
+  }
+  .final-title span { color: var(--accent); }
+  .final-sub {
+    font-size: 1.05rem; color: rgba(255,255,255,.55); line-height: 1.75;
+    max-width: 52ch; margin: 0 auto 2.5rem;
+    position: relative; z-index: 1;
+  }
+  .final-ctas { display: flex; align-items: center; justify-content: center; gap: 1rem; flex-wrap: wrap; position: relative; z-index: 1; }
+  .final-trust {
+    margin-top: 1.75rem; font-size: .82rem;
+    color: rgba(255,255,255,.3); position: relative; z-index: 1;
+  }
+
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     FOOTER
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+  footer {
+    background: var(--bg-dark);
+    border-top: 1px solid var(--border-dark);
+    padding: 2.25rem 0;
+  }
+  .footer-inner {
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem;
+  }
+  .footer-logo { font-family: var(--font-brand); font-size: 1.4rem; letter-spacing: .05em; color: rgba(255,255,255,.5); }
+  .footer-links { display: flex; gap: 2rem; flex-wrap: wrap; }
+  .footer-links a { font-size: .83rem; color: rgba(255,255,255,.3); transition: color .15s; }
+  .footer-links a:hover { color: rgba(255,255,255,.65); }
+  .footer-copy { width: 100%; font-size: .75rem; color: rgba(255,255,255,.2); padding-top: 1.25rem; border-top: 1px solid var(--border-dark); text-align: center; line-height: 1.7; margin-top: .5rem; }
+
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     VIDEO MODAL
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+  #video-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.85); z-index: 10000; align-items: center; justify-content: center; }
+  #video-modal.open { display: flex; }
+  .modal-box { width: 90vw; max-width: 740px; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-xl); overflow: hidden; position: relative; box-shadow: var(--shadow-lg); }
+  .modal-ph { aspect-ratio: 16/9; background: var(--bg-dark); display: flex; align-items: center; justify-content: center; font-size: 3.5rem; }
+  #close-modal { position: absolute; top: .75rem; right: .75rem; width: 30px; height: 30px; background: var(--bg); border: 1px solid var(--border); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: .95rem; cursor: pointer; color: var(--text-muted); z-index: 10; transition: background .15s; }
+  #close-modal:hover { background: var(--bg-alt); }
+
+  /* Mobile float */
+  .float-bar { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: rgba(253,252,248,.96); backdrop-filter: blur(16px); border-top: 1px solid var(--border); padding: .875rem 1.25rem; align-items: center; justify-content: space-between; gap: 1rem; z-index: 8000; box-shadow: 0 -4px 24px rgba(0,0,0,.07); }
+  .float-price { font-family: var(--font-brand); font-size: 2rem; color: var(--text); line-height: 1; }
+  .float-price small { font-family: var(--font-body); font-size: .72rem; color: var(--text-light); display: block; }
+  @media (max-width: 768px) { .float-bar { display: flex; } }
+  </style>
+</head>
+
+<body>
+
+<!-- VIDEO MODAL -->
+<div id="video-modal">
+  <div class="modal-box">
+    <button id="close-modal" aria-label="Fechar">✕</button>
+    <div class="modal-ph">🎬</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     NAV
+═══════════════════════════════════════ -->
+<nav id="nav">
+  <div class="wrap">
+    <div class="nav-inner">
+      <a href="#hero" class="nav-logo">
+        <span class="dot"></span>
+        FAZDETOON
+      </a>
+      <div id="nav-menu" class="nav-links">
+        <a href="#modules">Conteúdo</a>
+        <a href="#teacher">Professor</a>
+        <a href="#testimonials">Alunos</a>
+        <a href="#pricing">Preço</a>
+        <a href="#faq">FAQ</a>
+        <a href="#pricing" class="btn btn-primary btn-sm">Quero entrar →</a>
+      </div>
+      <button id="nav-toggle" aria-label="Menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════
+     § 1 — HERO
+═══════════════════════════════════════ -->
+<section id="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+
+      <div>
+        <div class="hero-label reveal">
+          <span class="label label-accent">Método exclusivo · Resultados em 7 dias</span>
+        </div>
+
+        <h1 class="hero-title reveal d1">
+          Aprenda a criar personagens cartoon com
+          <em>identidade única</em>
+        </h1>
+
+        <p class="hero-sub reveal d2">
+          O método passo a passo para dominar a criação de personagens do zero — mesmo que você nunca tenha desenhado antes.
+        </p>
+
+        <div class="hero-ctas reveal d3">
+          <a href="#pricing" class="btn btn-primary btn-xl">Começar agora →</a>
+          <a href="#modules" class="btn btn-ghost btn-lg">Ver o conteúdo</a>
+        </div>
+
+        <div class="hero-trust reveal d4">
+          <span class="trust-item">⭐ <strong>4,9</strong>&nbsp;de avaliação</span>
+          <span class="trust-item">🎓 <strong>+2.400</strong>&nbsp;alunos</span>
+          <span class="trust-item">🛡️ 7 dias de garantia</span>
+        </div>
+      </div>
+
+      <div class="hero-visual reveal d2">
+        <img
+          class="hero-cat-img"
+          src="hero-cat.png"
+          alt="Personagem rubber hose desenhando — estilo Fazdetoon"
+        >
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     § 2 — PROOF BAR
+═══════════════════════════════════════ -->
+<section id="proof">
+  <div class="wrap">
+    <div class="proof-inner">
+      <div class="proof-stat">
+        <div class="proof-num" data-target="2400" data-suffix="+">0</div>
+        <div class="proof-label">Alunos formados</div>
+      </div>
+      <div class="proof-sep"></div>
+      <div class="proof-stat">
+        <div class="proof-num">⭐ 4,9</div>
+        <div class="proof-label">Avaliação média</div>
+      </div>
+      <div class="proof-sep"></div>
+      <div class="proof-stat">
+        <div class="proof-num" data-target="8">0</div>
+        <div class="proof-label">Módulos + bônus</div>
+      </div>
+      <div class="proof-sep"></div>
+      <div class="proof-stat">
+        <div class="proof-num" data-target="97" data-suffix="%">0</div>
+        <div class="proof-label">Recomendam</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     § 3 — PAIN
+═══════════════════════════════════════ -->
+<section id="pain" class="sec">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      <span class="label" style="margin-bottom:1.25rem; display:inline-flex;">Você se identifica?</span>
+      <h2 class="sec-title">Os bloqueios mais comuns</h2>
+      <p class="sec-sub mx-auto">Esses são os obstáculos de quem quer criar personagens mas ainda não encontrou o caminho certo.</p>
+    </div>
+    <div class="pain-grid">
+      <div class="pain-card reveal d1"><span class="pain-emoji">😩</span><p class="pain-text">Tenta criar um personagem e ele fica torto e sem graça, nada do que você imaginou</p></div>
+      <div class="pain-card reveal d2"><span class="pain-emoji">📺</span><p class="pain-text">Assiste horas de tutoriais mas não consegue reproduzir nada no final</p></div>
+      <div class="pain-card reveal d3"><span class="pain-emoji">🎨</span><p class="pain-text">Não sabe como escolher cores que funcionem juntas no seu personagem</p></div>
+      <div class="pain-card reveal d1"><span class="pain-emoji">🤷</span><p class="pain-text">Quer criar uma mascote para o negócio mas não sabe por onde começar</p></div>
+      <div class="pain-card reveal d2"><span class="pain-emoji">🔁</span><p class="pain-text">Começa animado mas desiste na metade porque os resultados não aparecem</p></div>
+      <div class="pain-card reveal d3"><span class="pain-emoji">💸</span><p class="pain-text">Já pagou cursos caros que prometeram muito e entregaram conteúdo genérico</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     § 4 — SOLUTION
+═══════════════════════════════════════ -->
+<section id="solution" class="sec">
+  <div class="wrap">
+    <div class="solution-grid">
+      <div class="reveal reveal-l">
+        <span class="label label-dark" style="margin-bottom:1.5rem; display:inline-flex;">A solução</span>
+        <h2 class="solution-title">Um método que realmente <span>funciona</span></h2>
+        <p class="solution-body">O Fazdetoon é um sistema estruturado que parte dos fundamentos visuais e te leva, passo a passo, a criar personagens com identidade própria, expressão e vida.</p>
+        <a href="#pricing" class="btn btn-primary btn-lg">Começar agora →</a>
+      </div>
+      <div class="solution-pillars reveal reveal-r">
+        <div class="pillar"><span class="pillar-n">01</span><span class="pillar-t">Fundamentos que todo criador precisa dominar primeiro</span></div>
+        <div class="pillar"><span class="pillar-n">02</span><span class="pillar-t">Exercícios práticos com progressão clara e eficiente</span></div>
+        <div class="pillar"><span class="pillar-n">03</span><span class="pillar-t">Foco em construir sua identidade visual única</span></div>
+        <div class="pillar"><span class="pillar-n">04</span><span class="pillar-t">Método testado com mais de 2.400 alunos reais</span></div>
+        <div class="pillar"><span class="pillar-n">05</span><span class="pillar-t">Resultado visível já na primeira semana de prática</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     § 5 — MODULES
+═══════════════════════════════════════ -->
+<section id="modules" class="sec">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      <span class="label" style="margin-bottom:1.25rem; display:inline-flex;">Conteúdo</span>
+      <h2 class="sec-title">Tudo que você vai aprender</h2>
+      <p class="sec-sub mx-auto">6 módulos + 2 bônus para criar personagens do zero com confiança e estilo próprio.</p>
+    </div>
+    <div class="modules-grid">
+      <div class="mod-card reveal d1">
+        <div class="mod-bg-num">01</div>
+        <span class="mod-icon">🔷</span>
+        <span class="mod-tag">Módulo 1</span>
+        <div class="mod-name">Fundamentos: Formas e Proporções</div>
+        <p class="mod-desc">Toda anatomia cartoon parte de formas simples. Aprenda o vocabulário visual que separa iniciantes de criadores consistentes.</p>
+        <span class="mod-count">8 aulas · 1h40min</span>
+      </div>
+      <div class="mod-card reveal d2">
+        <div class="mod-bg-num">02</div>
+        <span class="mod-icon">😄</span>
+        <span class="mod-tag">Módulo 2</span>
+        <div class="mod-name">Rosto, Olhos e Expressões</div>
+        <p class="mod-desc">Domine a linguagem das expressões faciais. Rostos que comunicam emoção e têm personalidade única em cada traço.</p>
+        <span class="mod-count">10 aulas · 2h15min</span>
+      </div>
+      <div class="mod-card reveal d3">
+        <div class="mod-bg-num">03</div>
+        <span class="mod-icon">🏃</span>
+        <span class="mod-tag">Módulo 3</span>
+        <div class="mod-name">Corpo, Postura e Movimento</div>
+        <p class="mod-desc">Construa corpos dinâmicos e poses que transmitem energia. Linha de ação e equilíbrio para personagens que parecem vivos.</p>
+        <span class="mod-count">9 aulas · 2h</span>
+      </div>
+      <div class="mod-card reveal d1">
+        <div class="mod-bg-num">04</div>
+        <span class="mod-icon">👗</span>
+        <span class="mod-tag">Módulo 4</span>
+        <div class="mod-name">Roupas, Acessórios e Detalhes</div>
+        <p class="mod-desc">Aprenda como roupas e acessórios comunicam personalidade, época e estilo sem precisar de muitas palavras.</p>
+        <span class="mod-count">7 aulas · 1h30min</span>
+      </div>
+      <div class="mod-card reveal d2">
+        <div class="mod-bg-num">05</div>
+        <span class="mod-icon">🌈</span>
+        <span class="mod-tag">Módulo 5</span>
+        <div class="mod-name">Cores e Paletas com Impacto</div>
+        <p class="mod-desc">Teoria da cor aplicada a personagens cartoon. Paletas harmônicas que reforçam identidade visual em qualquer contexto.</p>
+        <span class="mod-count">8 aulas · 1h50min</span>
+      </div>
+      <div class="mod-card reveal d3">
+        <div class="mod-bg-num">06</div>
+        <span class="mod-icon">🚀</span>
+        <span class="mod-tag">Módulo 6</span>
+        <div class="mod-name">Construindo Sua Identidade Visual</div>
+        <p class="mod-desc">Crie o seu personagem do início ao fim. Desenvolva um estilo próprio reconhecível e saiba como monetizá-lo.</p>
+        <span class="mod-count">11 aulas · 2h30min</span>
+      </div>
+      <div class="mod-card bonus reveal d1">
+        <div class="mod-bg-num">B1</div>
+        <span class="mod-icon">⚡</span>
+        <span class="bonus-label">bônus</span>
+        <div class="mod-name">Animação Básica de Personagens</div>
+        <p class="mod-desc">Dê vida ao seu personagem com loops de caminhada, expressões e micro-movimentos para redes sociais.</p>
+        <span class="mod-count">6 aulas · valor R$97</span>
+      </div>
+      <div class="mod-card bonus reveal d2">
+        <div class="mod-bg-num">B2</div>
+        <span class="mod-icon">📱</span>
+        <span class="bonus-label">bônus</span>
+        <div class="mod-name">Criando no iPad & Tablet</div>
+        <p class="mod-desc">Workflow completo no Procreate. Pincéis, templates e organização de layers para um fluxo profissional.</p>
+        <span class="mod-count">5 aulas · valor R$77</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     § 6 — FOR WHOM
+═══════════════════════════════════════ -->
+<section id="for-whom" class="sec">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      <span class="label" style="margin-bottom:1.25rem; display:inline-flex;">Público-alvo</span>
+      <h2 class="sec-title">Para quem é o Fazdetoon?</h2>
+    </div>
+    <div class="whom-grid">
+      <div class="whom-panel yes reveal reveal-l">
+        <div class="whom-head">
+          <span class="whom-head-icon">✅</span>
+          <h3 class="whom-head-title">É para você se…</h3>
+        </div>
+        <ul class="clist">
+          <li><span class="ci ci-yes">✓</span><span>Quer aprender a criar personagens do zero, mesmo sendo iniciante</span></li>
+          <li><span class="ci ci-yes">✓</span><span>Quer criar uma mascote para a sua marca ou negócio</span></li>
+          <li><span class="ci ci-yes">✓</span><span>É designer e quer adicionar ilustração ao seu portfólio</span></li>
+          <li><span class="ci ci-yes">✓</span><span>Quer produzir conteúdo visual único para redes sociais</span></li>
+          <li><span class="ci ci-yes">✓</span><span>Quer aprender no próprio ritmo com acesso vitalício</span></li>
+        </ul>
+      </div>
+      <div class="whom-panel no reveal reveal-r">
+        <div class="whom-head">
+          <span class="whom-head-icon">❌</span>
+          <h3 class="whom-head-title">Não é para você se…</h3>
+        </div>
+        <ul class="clist">
+          <li><span class="ci ci-no">✕</span><span>Quer um curso de animação 3D ou motion graphics</span></li>
+          <li><span class="ci ci-no">✕</span><span>Busca resultados sem dedicar esforço algum à prática</span></li>
+          <li><span class="ci ci-no">✕</span><span>Quer aprender fotorrealismo ou ilustração hiper-realista</span></li>
+          <li><span class="ci ci-no">✕</span><span>Não tem nenhum tempo para dedicar ao curso</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     § 7 — TEACHER
+═══════════════════════════════════════ -->
+<section id="teacher" class="sec">
+  <div class="wrap">
+    <div class="teacher-grid">
+      <div class="reveal" style="position:relative;">
+        <div class="teacher-photo">
+          <img src="teacher-photo.jpg" alt="Elton — Professor Fazdetoon" />
+          <div class="teacher-badge">🏆 +2.400 alunos formados</div>
+        </div>
+      </div>
+      <div class="reveal d1">
+        <span class="label" style="margin-bottom:1.25rem; display:inline-flex;">Sobre o professor</span>
+        <h2 class="teacher-name">Elton</h2>
+        <p class="teacher-role">Ilustrador, Animador & Educador de Criação de Personagens</p>
+        <p class="teacher-bio">Com mais de <strong>12 anos de experiência</strong> no mercado de ilustração e design de personagens, Elton já criou centenas de mascotes para marcas e projetos ao redor do Brasil e do mundo.</p>
+        <p class="teacher-bio">Ele combina precisão técnica com uma didática acessível que já transformou a trajetória de mais de 2.400 alunos — de iniciantes absolutos a designers profissionais.</p>
+        <div class="teacher-stats">
+          <div><div class="t-stat-num" data-target="12" data-suffix="+">0</div><div class="t-stat-label">anos de experiência</div></div>
+          <div><div class="t-stat-num" data-target="2400" data-suffix="+">0</div><div class="t-stat-label">alunos formados</div></div>
+          <div><div class="t-stat-num" data-target="500" data-suffix="+">0</div><div class="t-stat-label">personagens criados</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     § 8 — TESTIMONIALS
+═══════════════════════════════════════ -->
+<section id="testimonials" class="sec">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      <span class="label" style="margin-bottom:1.25rem; display:inline-flex;">Depoimentos</span>
+      <h2 class="sec-title">O que os alunos dizem</h2>
+      <p class="sec-sub mx-auto">Mais de 2.400 alunos já transformaram sua criatividade com o Fazdetoon</p>
+    </div>
+  </div>
+
+  <!-- Scrolling columns — no wrap limit so they bleed edge-to-edge feel -->
+  <div class="testi-stage reveal">
+
+    <!-- Column 1 — 15s -->
+    <div class="testi-col">
+      <div class="testi-track" style="animation-duration:15s;">
+        <!-- original -->
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-quote">"Nunca pensei que conseguiria criar um personagem profissional. Em 3 semanas, criei a mascote da minha empresa e os clientes amaram!"</p>
+          <div class="testi-author">
+            <img class="testi-avatar" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=80&h=80" alt="Camila R.">
+            <div><div class="testi-name">Camila R.</div><div class="testi-role">Empreendedora · São Paulo</div></div>
+          </div>
+        </div>
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-quote">"Já tinha tentado outros cursos mas nunca conseguia sair do papel. O Fazdetoon me deu a estrutura que faltava."</p>
+          <div class="testi-author">
+            <img class="testi-avatar" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=80&h=80" alt="Lucas M.">
+            <div><div class="testi-name">Lucas M.</div><div class="testi-role">Designer Freelancer · BH</div></div>
+          </div>
+        </div>
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-quote">"O módulo de cores mudou minha vida! Sempre tive dificuldade com paletas. Agora crio com total confiança e velocidade."</p>
+          <div class="testi-author">
+            <img class="testi-avatar" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=80&h=80" alt="Ana P.">
+            <div><div class="testi-name">Ana P.</div><div class="testi-role">Professora de Arte · Recife</div></div>
+          </div>
+        </div>
+        <!-- clones para loop sem salto -->
+        <div class="testi-card" aria-hidden="true">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-quote">"Nunca pensei que conseguiria criar um personagem profissional. Em 3 semanas, criei a mascote da minha empresa e os clientes amaram!"</p>
+          <div class="testi-author">
+            <img class="testi-avatar" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=80&h=80" alt="Camila R.">
+            <div><div class="testi-name">Camila R.</div><div class="testi-role">Empreendedora · São Paulo</div></div>
+          </div>
+        </div>
+        <div class="testi-card" aria-hidden="true">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-quote">"Já tinha tentado outros cursos mas nunca conseguia sair do papel. O Fazdetoon me deu a estrutura que faltava."</p>
+          <div class="testi-author">
+            <img class="testi-avatar" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=80&h=80" alt="Lucas M.">
+            <div><div class="testi-name">Lucas M.</div><div class="testi-role">Designer Freelancer · BH</div></div>
+          </div>
+        </div>
+        <div class="testi-card" aria-hidden="true">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-quote">"O módulo de cores mudou minha vida! Sempre tive dificuldade com paletas. Agora crio com total confiança e velocidade."</p>
+          <div class="testi-author">
+            <img class="testi-avatar" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=80&h=80" alt="Ana P.">
+            <div><div class="testi-name">Ana P.</div><div class="testi-role">Professora de Arte · Recife</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Column 2 — 19s (visible md+) -->
+    <div class="testi-col">
+      <div class="testi-track" style="animation-duration:19s;">
+        <!-- original -->
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-quote">"Comprei sem muita esperança pelo preço baixo. Me surpreendi demais. Vale 5x mais. Já indiquei para 4 amigos."</p>
+          <div class="testi-author">
+            <img class="testi-avatar" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=80&h=80" alt="Rodrigo S.">
+            <div><div class="testi-name">Rodrigo S.</div><div class="testi-role">Publicitário · Rio de Janeiro</div></div>
+          </div>
+        </div>
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-quote">"Criei o personagem do meu canal infantil do zero! O Elton explica de um jeito que até eu — péssima em desenho — consegui fazer."</p>
+          <div class="testi-author">
+            <img class="testi-avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=80&h=80" alt="Fernanda L.">
+            <div><div class="testi-name">Fernanda L.</div><div class="testi-role">Youtuber · Curitiba</div></div>
+          </div>
+        </div>
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-quote">"Conteúdo denso e aplicável de imediato. O bônus de animação foi a cereja do bolo. Meu engajamento nas redes aumentou 40%."</p>
+          <div class="testi-author">
+            <img class="testi-avatar" src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&q=80&w=80&h=80" alt="Marco A.">
+            <div><div class="testi-name">Marco A.</div><div class="testi-role">Social Media · Floripa</div></div>
+          </div>
+        </div>
+        <!-- clones -->
+        <div class="testi-card" aria-hidden="true">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-quote">"Comprei sem muita esperança pelo preço baixo. Me surpreendi demais. Vale 5x mais. Já indiquei para 4 amigos."</p>
+          <div class="testi-author">
+            <img class="testi-avatar" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=80&h=80" alt="Rodrigo S.">
+            <div><div class="testi-name">Rodrigo S.</div><div class="testi-role">Publicitário · Rio de Janeiro</div></div>
+          </div>
+        </div>
+        <div class="testi-card" aria-hidden="true">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-quote">"Criei o personagem do meu canal infantil do zero! O Elton explica de um jeito que até eu — péssima em desenho — consegui fazer."</p>
+          <div class="testi-author">
+            <img class="testi-avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=80&h=80" alt="Fernanda L.">
+            <div><div class="testi-name">Fernanda L.</div><div class="testi-role">Youtuber · Curitiba</div></div>
+          </div>
+        </div>
+        <div class="testi-card" aria-hidden="true">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-quote">"Conteúdo denso e aplicável de imediato. O bônus de animação foi a cereja do bolo. Meu engajamento nas redes aumentou 40%."</p>
+          <div class="testi-author">
+            <img class="testi-avatar" src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&q=80&w=80&h=80" alt="Marco A.">
+            <div><div class="testi-name">Marco A.</div><div class="testi-role">Social Media · Floripa</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Column 3 — 17s (visible lg+) -->
+    <div class="testi-col">
+      <div class="testi-track" style="animation-duration:17s;">
+        <!-- original -->
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-quote">"Nossa presença online e conversões melhoraram muito depois de criar um personagem com identidade própria. Recomendo demais!"</p>
+          <div class="testi-author">
+            <img class="testi-avatar" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=80&h=80" alt="Thiago B.">
+            <div><div class="testi-name">Thiago B.</div><div class="testi-role">E-commerce · Natal</div></div>
+          </div>
+        </div>
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-quote">"Finalmente encontrei um método que respeita meu ritmo. As aulas são curtas, objetivas e cada exercício tem um propósito claro."</p>
+          <div class="testi-author">
+            <img class="testi-avatar" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=80&h=80" alt="Juliana K.">
+            <div><div class="testi-name">Juliana K.</div><div class="testi-role">Ilustradora · Porto Alegre</div></div>
+          </div>
+        </div>
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-quote">"O suporte é incrível. Postei minha dúvida na comunidade e em horas já tinha resposta do professor. Isso faz toda a diferença."</p>
+          <div class="testi-author">
+            <img class="testi-avatar" src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=80&h=80" alt="Rafael T.">
+            <div><div class="testi-name">Rafael T.</div><div class="testi-role">Storyboarder · Fortaleza</div></div>
+          </div>
+        </div>
+        <!-- clones -->
+        <div class="testi-card" aria-hidden="true">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-quote">"Nossa presença online e conversões melhoraram muito depois de criar um personagem com identidade própria. Recomendo demais!"</p>
+          <div class="testi-author">
+            <img class="testi-avatar" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=80&h=80" alt="Thiago B.">
+            <div><div class="testi-name">Thiago B.</div><div class="testi-role">E-commerce · Natal</div></div>
+          </div>
+        </div>
+        <div class="testi-card" aria-hidden="true">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-quote">"Finalmente encontrei um método que respeita meu ritmo. As aulas são curtas, objetivas e cada exercício tem um propósito claro."</p>
+          <div class="testi-author">
+            <img class="testi-avatar" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=80&h=80" alt="Juliana K.">
+            <div><div class="testi-name">Juliana K.</div><div class="testi-role">Ilustradora · Porto Alegre</div></div>
+          </div>
+        </div>
+        <div class="testi-card" aria-hidden="true">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-quote">"O suporte é incrível. Postei minha dúvida na comunidade e em horas já tinha resposta do professor. Isso faz toda a diferença."</p>
+          <div class="testi-author">
+            <img class="testi-avatar" src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=80&h=80" alt="Rafael T.">
+            <div><div class="testi-name">Rafael T.</div><div class="testi-role">Storyboarder · Fortaleza</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /testi-stage -->
+</section>
+
+<!-- ═══════════════════════════════════════
+     § 9 — BONUSES
+═══════════════════════════════════════ -->
+<section id="bonuses" class="sec">
+  <div class="wrap-md">
+    <div class="sec-head center reveal">
+      <span class="label" style="margin-bottom:1.25rem; display:inline-flex;">Bônus incluídos</span>
+      <h2 class="sec-title">Você leva muito mais</h2>
+      <p class="sec-sub mx-auto">Além dos 6 módulos, você recebe estes bônus sem custo adicional.</p>
+    </div>
+    <div class="bonus-list">
+      <div class="bonus-row reveal d1"><span class="bonus-row-icon">⚡</span><div><div class="bonus-row-name">Animação Básica de Personagens</div><p class="bonus-row-desc">Loops de caminhada, expressões e micro-movimentos para redes sociais</p></div><div class="bonus-row-val">R$97</div></div>
+      <div class="bonus-row reveal d2"><span class="bonus-row-icon">📱</span><div><div class="bonus-row-name">Criando no iPad & Tablet</div><p class="bonus-row-desc">Workflow completo no Procreate com pincéis e templates exclusivos</p></div><div class="bonus-row-val">R$77</div></div>
+      <div class="bonus-row reveal d3"><span class="bonus-row-icon">🖼️</span><div><div class="bonus-row-name">Pack de 50 Referências Visuais</div><p class="bonus-row-desc">Biblioteca curada com estilos, paletas e poses para o seu processo criativo</p></div><div class="bonus-row-val">R$47</div></div>
+      <div class="bonus-row reveal d2"><span class="bonus-row-icon">💬</span><div><div class="bonus-row-name">Comunidade Exclusiva no Discord</div><p class="bonus-row-desc">Grupo privado para dúvidas, feedback e mostrar seus trabalhos</p></div><div class="bonus-row-val">R$37</div></div>
+    </div>
+    <div class="bonus-total-bar reveal">
+      <div class="bonus-total-label">Valor total dos bônus</div>
+      <div class="bonus-total-num">R$ 258</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     § 10 — PRICING
+═══════════════════════════════════════ -->
+<section id="pricing" class="sec">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      <span class="label" style="margin-bottom:1.25rem; display:inline-flex;">Investimento</span>
+      <h2 class="sec-title">Acesso completo por muito menos do que vale</h2>
+    </div>
+
+    <!-- Countdown -->
+    <div class="text-center reveal" style="margin-bottom:2.5rem;">
+      <p style="font-size:.85rem; color:var(--text-light); margin-bottom:.75rem;">Oferta de lançamento expira em</p>
+      <div class="countdown" style="justify-content:center;">
+        <div class="cd-unit"><div class="cd-num timer-h">00</div><div class="cd-label">horas</div></div>
+        <div class="cd-sep">:</div>
+        <div class="cd-unit"><div class="cd-num timer-m">00</div><div class="cd-label">min</div></div>
+        <div class="cd-sep">:</div>
+        <div class="cd-unit"><div class="cd-num timer-s">00</div><div class="cd-label">seg</div></div>
+      </div>
+    </div>
+
+    <div class="pricing-card reveal">
+      <div class="pricing-top">
+        <div class="pricing-plan-label">Fazdetoon Completo</div>
+        <div class="pricing-plan-name">Acesso Total Vitalício</div>
+      </div>
+      <div class="pricing-body">
+        <div class="price-block">
+          <div class="price-old">De R$ 497</div>
+          <span class="price-offer-tag">✦ Oferta especial de lançamento ✦</span>
+          <div class="price-main">
+            <span class="price-currency">R$</span>
+            <span class="price-value">97</span>
+          </div>
+          <p class="price-note">ou 12× de R$ 9,97 · Acesso imediato após o pagamento</p>
+        </div>
+        <div class="includes-label">O que está incluído</div>
+        <ul class="clist">
+          <li><span class="ci ci-yes">✓</span><span>6 módulos completos com mais de 59 aulas em vídeo</span></li>
+          <li><span class="ci ci-yes">✓</span><span>Bônus: Animação Básica de Personagens (R$97)</span></li>
+          <li><span class="ci ci-yes">✓</span><span>Bônus: Criando no iPad & Tablet com Procreate (R$77)</span></li>
+          <li><span class="ci ci-yes">✓</span><span>Bônus: Pack 50 Referências Visuais (R$47)</span></li>
+          <li><span class="ci ci-yes">✓</span><span>Acesso à comunidade exclusiva no Discord</span></li>
+          <li><span class="ci ci-yes">✓</span><span>Certificado de conclusão digital</span></li>
+          <li><span class="ci ci-yes">✓</span><span>Acesso vitalício + todas as atualizações futuras</span></li>
+        </ul>
+        <a href="#" class="btn btn-primary btn-xl pricing-cta">Começar agora →</a>
+        <div class="pricing-safe">
+          🔒 Compra 100% segura · SSL · Hotmart<br>
+          Depois o preço volta para R$ 497
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     § 11 — GUARANTEE
+═══════════════════════════════════════ -->
+<section id="guarantee" class="sec-sm">
+  <div class="wrap">
+    <div class="guarantee-inner reveal">
+      <div class="guarantee-icon">🛡️</div>
+      <div>
+        <h2 class="guarantee-title">Garantia de 7 dias</h2>
+        <p class="guarantee-text">Você tem 7 dias completos para assistir, praticar e decidir se o Fazdetoon é para você. Se por qualquer motivo não ficar satisfeito, devolvemos <strong>100% do seu dinheiro</strong>, sem perguntas e sem complicação.</p>
+        <p class="guarantee-text">O risco é todo nosso. Você só tem a ganhar.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     § 12 — FAQ
+═══════════════════════════════════════ -->
+<section id="faq" class="sec">
+  <div class="wrap-sm">
+    <div class="sec-head center reveal">
+      <span class="label" style="margin-bottom:1.25rem; display:inline-flex;">Perguntas frequentes</span>
+      <h2 class="sec-title">Ficou com dúvidas?</h2>
+    </div>
+    <div>
+      <div class="faq-item reveal d1">
+        <div class="faq-q accordion-trigger">Preciso saber desenhar para fazer o curso?<span class="faq-icon">+</span></div>
+        <div class="faq-body-wrap accordion-content"><div class="faq-body">Não! O Fazdetoon foi criado justamente para quem está começando do zero. O módulo 1 começa pelos fundamentos mais básicos e você vai evoluindo no seu ritmo. Se você consegue segurar um lápis, você consegue fazer este curso.</div></div>
+      </div>
+      <div class="faq-item reveal d2">
+        <div class="faq-q accordion-trigger">Precisa de software ou equipamento específico?<span class="faq-icon">+</span></div>
+        <div class="faq-body-wrap accordion-content"><div class="faq-body">Não. As aulas ensinam fundamentos que se aplicam em qualquer ferramenta: papel e lápis, tablet gráfico, iPad ou software. O bônus de iPad mostra um workflow no Procreate, mas não é obrigatório ter tablet para acompanhar o curso principal.</div></div>
+      </div>
+      <div class="faq-item reveal d3">
+        <div class="faq-q accordion-trigger">Por quanto tempo terei acesso?<span class="faq-icon">+</span></div>
+        <div class="faq-body-wrap accordion-content"><div class="faq-body">O acesso é vitalício. Você assiste quando quiser, quantas vezes quiser. E sempre que novos conteúdos forem adicionados, você terá acesso automaticamente sem pagar nada extra.</div></div>
+      </div>
+      <div class="faq-item reveal d1">
+        <div class="faq-q accordion-trigger">Tenho uma semana corrida. Consigo acompanhar?<span class="faq-icon">+</span></div>
+        <div class="faq-body-wrap accordion-content"><div class="faq-body">Sim! As aulas têm entre 8 e 20 minutos. Com 20–30 minutos por dia você avança consistentemente. E como o acesso é vitalício, se uma semana for mais corrida, você retoma quando puder.</div></div>
+      </div>
+      <div class="faq-item reveal d2">
+        <div class="faq-q accordion-trigger">Como funciona o pagamento e o acesso?<span class="faq-icon">+</span></div>
+        <div class="faq-body-wrap accordion-content"><div class="faq-body">O pagamento é feito pela plataforma Hotmart, 100% segura, com todas as formas disponíveis (cartão de crédito em até 12×, boleto, Pix). Após a confirmação, você recebe o acesso imediatamente no seu e-mail.</div></div>
+      </div>
+      <div class="faq-item reveal d3">
+        <div class="faq-q accordion-trigger">E se eu não gostar? Existe reembolso?<span class="faq-icon">+</span></div>
+        <div class="faq-body-wrap accordion-content"><div class="faq-body">Sim. Você tem 7 dias de garantia incondicional. Se não ficar satisfeito por qualquer motivo, basta solicitar o reembolso dentro desse período e devolvemos 100% do valor pago. Sem burocracia.</div></div>
+      </div>
+      <div class="faq-item reveal d1">
+        <div class="faq-q accordion-trigger">Posso usar os personagens que criar comercialmente?<span class="faq-icon">+</span></div>
+        <div class="faq-body-wrap accordion-content"><div class="faq-body">Absolutamente. Tudo que você criar durante o curso é 100% seu. Você pode usar para a sua marca, vender para clientes, criar produtos — qualquer uso comercial é permitido.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     § 13 — FINAL CTA
+═══════════════════════════════════════ -->
+<section id="final-cta" class="sec-lg">
+  <div class="wrap">
+    <span class="label label-dark" style="margin-bottom:1.5rem; display:inline-flex;">Não deixe para amanhã</span>
+    <h2 class="final-title reveal">Seu personagem<br>espera por <span>você</span></h2>
+    <p class="final-sub reveal d1">Toda grande história começa com um personagem. O Fazdetoon é o método que vai te dar as ferramentas para criar o seu — com identidade, estilo e profissionalismo.</p>
+    <div class="final-ctas reveal d2">
+      <a href="#pricing" class="btn btn-primary btn-xl">Começar agora por R$ 97 →</a>
+      <a href="#faq" class="btn btn-ghost-inv btn-lg">Tirar dúvidas</a>
+    </div>
+    <p class="final-trust reveal d3">🛡️ 7 dias de garantia &nbsp;·&nbsp; 🔒 Compra segura &nbsp;·&nbsp; ⚡ Acesso imediato</p>
+
+    <!-- mini countdown repeat -->
+    <div class="countdown reveal d3" style="justify-content:center; margin-top:2rem;">
+      <div class="cd-unit"><div class="cd-num timer-h" style="background:rgba(255,255,255,.08); color:var(--accent);">00</div><div class="cd-label">horas</div></div>
+      <div class="cd-sep">:</div>
+      <div class="cd-unit"><div class="cd-num timer-m" style="background:rgba(255,255,255,.08); color:var(--accent);">00</div><div class="cd-label">min</div></div>
+      <div class="cd-sep">:</div>
+      <div class="cd-unit"><div class="cd-num timer-s" style="background:rgba(255,255,255,.08); color:var(--accent);">00</div><div class="cd-label">seg</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="footer-inner">
+      <div class="footer-logo">FAZDETOON</div>
+      <div class="footer-links">
+        <a href="#">Privacidade</a>
+        <a href="#">Termos</a>
+        <a href="#">Contato</a>
+        <a href="#faq">FAQ</a>
+      </div>
+    </div>
+    <p class="footer-copy">© 2025 Fazdetoon. Todos os direitos reservados. Distribuído pela Hotmart.<br>Os resultados podem variar. Os depoimentos são de alunos reais.</p>
+  </div>
+</footer>
+
+<!-- Mobile float bar -->
+<div class="float-bar">
+  <div class="float-price">
+    <small>Oferta de lançamento</small>
+    R$ 97
+  </div>
+  <a href="#pricing" class="btn btn-primary">Começar agora →</a>
+</div>
+
+<script src="main.js"></script>
+</body>
+</html>

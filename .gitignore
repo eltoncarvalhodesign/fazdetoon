@@ -1,0 +1,26 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Claude Code
+.claude/
+
+# Dev server temp files
+/tmp/
+
+# Old/drafts
+old/
+new site/
+site/
+
+# Env
+.env
+.env.local
