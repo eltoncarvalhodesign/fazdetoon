@@ -24,3 +24,4 @@ site/
 # Env
 .env
 .env.local
+.vercel
