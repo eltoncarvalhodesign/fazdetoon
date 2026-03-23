@@ -25,3 +25,5 @@ site/
 .env
 .env.local
 .vercel
+storybook-static/
+node_modules/
