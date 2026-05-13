@@ -407,7 +407,13 @@
   /* v2 — canvas frame-sequence replacing the cat illustration.
      Matches .hero-cat-img dimensions so the rest of the layout
      stays identical. mix-blend-mode: multiply lets the white
-     background of each frame disappear into the page bg. */
+     background of each frame disappear into the page bg.
+
+     IMPORTANT: do NOT add will-change, transform, filter, opacity<1,
+     or isolation here — any of those create a stacking context and
+     mix-blend-mode then has nothing to blend against. The reveal
+     animation on the parent .hero-visual is also overridden below
+     so the parent never creates a stacking context for v2. */
   .hero-cat-canvas {
     display: block;
     width: 100%;
@@ -416,7 +422,17 @@
     margin-bottom: -4rem;
     mix-blend-mode: multiply;
     background: transparent;
-    will-change: transform;
+  }
+
+  /* Force the canvas wrapper out of any stacking context the original
+     .reveal animation would create, so the canvas can blend with the
+     page background underneath. */
+  .hero-visual.reveal,
+  .hero-visual.reveal.visible {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    isolation: auto !important;
   }
 
   /* Floating badges */
