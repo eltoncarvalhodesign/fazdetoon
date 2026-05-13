@@ -1711,7 +1711,11 @@
           const img = new Image();
           img.decoding = 'async';
           img.onload = img.onerror = () => resolve();
-          img.src = `assets/frames/${slug}/${String(i + 1).padStart(4, '0')}.jpg?v=${FRAME_VERSION}`;
+          // Absolute path: with Vercel cleanUrls the page is served at "/v2"
+          // (no trailing slash), so relative "assets/..." would resolve from
+          // "/" and 404. Anchor frames to /v2/assets/... so the URL works
+          // whether the user lands on /v2 or /v2/.
+          img.src = `/v2/assets/frames/${slug}/${String(i + 1).padStart(4, '0')}.jpg?v=${FRAME_VERSION}`;
           imgs[i] = img;
         });
       })
