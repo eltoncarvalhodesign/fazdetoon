@@ -1761,12 +1761,13 @@
 
     let currentFrame = 0;
 
-    // v3 — canvas is now fixed full-height. The hand at the top of the source
-    // image is naturally obscured by the sticky header (z-index 50) sitting on
-    // top of the canvas's first ~76px. We only need a light upward bias to
-    // anchor the cat lower in the frame; no scale boost is needed.
-    const Y_BIAS = -0.04;
-    const SCALE_BOOST = 1.0;
+    // v3 — canvas is fixed full-height. Shift the image DOWN inside the
+    // canvas so the full character drops below the sticky header overlay and
+    // the entire frame is visible inside the viewport. Positive Y_BIAS pushes
+    // the image lower; SCALE_BOOST below 1.0 shrinks it slightly so nothing
+    // gets cropped at the bottom near the proof clone.
+    const Y_BIAS = 0.25;
+    const SCALE_BOOST = 0.92;
 
     const draw = (frameIdx) => {
       const idx = Math.max(0, Math.min(TOTAL_FRAMES - 1, Math.round(frameIdx)));
