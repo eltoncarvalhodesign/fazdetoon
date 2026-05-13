@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fazdetoon · v2 — Scroll Animation</title>
+  <meta name="description" content="Crie personagens cartoon com identidade única. Versão v2 com animação por frame-sequence ativada pelo scroll." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sniglet:wght@400;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/v2.css" />
+
+  <!-- Preload the very first frame of each sequence so the canvas paints instantly -->
+  <link rel="preload" as="image" href="assets/frames/v1/0001.jpg" />
+  <link rel="preload" as="image" href="assets/frames/v2/0001.jpg" />
+</head>
+<body>
+
+  <!-- Loader overlay shown while the 480 frames preload -->
+  <div class="loader" id="loader" aria-hidden="true">
+    <div class="loader-inner">
+      <span class="brand-dot"></span>
+      <span class="loader-name">FAZDETOON</span>
+      <div class="loader-bar"><div class="loader-bar-fill" id="loader-bar"></div></div>
+      <div class="loader-pct" id="loader-pct">0%</div>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="#top">
+        <span class="brand-dot"></span>
+        <span class="brand-name">FAZDETOON</span>
+      </a>
+      <nav class="main-nav">
+        <a href="#conteudo">Conteúdo</a>
+        <a href="#professor">Professor</a>
+        <a href="#alunos">Alunos</a>
+        <a href="#preco">Preço</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <a href="#preco" class="btn btn-primary btn-pill">Quero entrar <span class="arrow">→</span></a>
+    </div>
+  </header>
+
+  <!-- HERO + canvas sequence 1 -->
+  <section id="top" class="scroll-section" data-frames="v1" data-canvas="canvas-1">
+    <div class="scroll-grid">
+      <div class="scroll-content">
+        <div class="scroll-content-inner">
+          <span class="badge">Método exclusivo · Resultados em 7 dias</span>
+          <h1 class="display">
+            Aprenda a criar<br/>
+            personagens<br/>
+            cartoon com<br/>
+            <span class="highlight">identidade única</span>
+          </h1>
+          <p class="lede">
+            O método passo a passo para dominar a criação de personagens
+            do zero — mesmo que você nunca tenha desenhado antes.
+          </p>
+          <div class="cta-row">
+            <a href="#preco" class="btn btn-primary btn-lg">Começar agora <span class="arrow">→</span></a>
+            <a href="#conteudo" class="btn btn-outline btn-lg">Ver o conteúdo</a>
+          </div>
+          <ul class="trust-list">
+            <li><span class="ti">★</span> <strong>4,9</strong> de avaliação</li>
+            <li><span class="ti">🎓</span> <strong>+2.400</strong> alunos</li>
+            <li><span class="ti">🛡</span> 7 dias de garantia</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Canvas stage pinned to the right half of viewport -->
+      <div class="canvas-stage">
+        <div class="canvas-sticky">
+          <canvas id="canvas-1" class="frame-canvas"></canvas>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 2 + canvas sequence 2 -->
+  <section id="problemas" class="scroll-section" data-frames="v2" data-canvas="canvas-2">
+    <div class="scroll-grid">
+      <div class="scroll-content">
+        <div class="scroll-content-inner">
+          <span class="eyebrow">Você se identifica?</span>
+          <h2 class="display display-md">
+            Os bloqueios mais<br/>
+            <span class="highlight">comuns</span>
+          </h2>
+          <p class="lede">
+            Esses são os obstáculos de quem quer criar personagens
+            mas ainda não encontrou o caminho certo.
+          </p>
+          <ul class="pain-list">
+            <li><span class="pain-ic">😩</span> Tenta criar e o personagem fica torto e sem graça</li>
+            <li><span class="pain-ic">📺</span> Assiste horas de tutorial mas não reproduz nada</li>
+            <li><span class="pain-ic">🎨</span> Não sabe escolher cores que funcionem juntas</li>
+            <li><span class="pain-ic">🤷</span> Quer criar uma mascote mas não sabe por onde começar</li>
+            <li><span class="pain-ic">🔁</span> Começa animado e desiste no meio do caminho</li>
+            <li><span class="pain-ic">💸</span> Pagou cursos caros que entregaram muito pouco</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="canvas-stage">
+        <div class="canvas-sticky">
+          <canvas id="canvas-2" class="frame-canvas"></canvas>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTEÚDO -->
+  <section id="conteudo" class="section section-light">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Conteúdo</span>
+        <h2 class="display display-md">Tudo que você vai <span class="highlight">aprender</span></h2>
+        <p class="lede center">6 módulos + 2 bônus para criar personagens do zero com estilo próprio.</p>
+      </div>
+
+      <div class="modules-grid">
+        <article class="module-card"><div class="mod-num">01</div><h3>Fundamentos: Formas e Proporções</h3><p>Toda anatomia cartoon parte de formas simples. Vocabulário visual que separa iniciantes de criadores consistentes.</p><span class="mod-meta">8 aulas · 1h40min</span></article>
+        <article class="module-card"><div class="mod-num">02</div><h3>Rosto, Olhos e Expressões</h3><p>Domine a linguagem das expressões. Rostos que comunicam emoção com personalidade única.</p><span class="mod-meta">10 aulas · 2h15min</span></article>
+        <article class="module-card"><div class="mod-num">03</div><h3>Corpo, Postura e Movimento</h3><p>Construa corpos dinâmicos. Linha de ação e equilíbrio para personagens vivos.</p><span class="mod-meta">9 aulas · 2h</span></article>
+        <article class="module-card"><div class="mod-num">04</div><h3>Roupas, Acessórios e Detalhes</h3><p>Roupas e acessórios comunicam personalidade, época e estilo de forma silenciosa.</p><span class="mod-meta">7 aulas · 1h30min</span></article>
+        <article class="module-card"><div class="mod-num">05</div><h3>Cores e Paletas com Impacto</h3><p>Teoria da cor aplicada a cartoon. Paletas harmônicas que reforçam identidade visual.</p><span class="mod-meta">8 aulas · 1h50min</span></article>
+        <article class="module-card"><div class="mod-num">06</div><h3>Construindo Sua Identidade Visual</h3><p>Crie o personagem do início ao fim. Estilo reconhecível e formas de monetizá-lo.</p><span class="mod-meta">11 aulas · 2h30min</span></article>
+        <article class="module-card module-bonus"><div class="mod-num">★</div><h3>Bônus · Animação Básica</h3><p>Loops de caminhada, expressões e micro-movimentos para redes sociais.</p><span class="mod-meta">6 aulas · valor R$97</span></article>
+        <article class="module-card module-bonus"><div class="mod-num">★</div><h3>Bônus · Procreate no iPad</h3><p>Workflow completo com pincéis, templates e organização de layers.</p><span class="mod-meta">5 aulas · valor R$77</span></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROFESSOR -->
+  <section id="professor" class="section">
+    <div class="container two-col">
+      <div class="prof-photo"><div class="prof-photo-inner"></div></div>
+      <div>
+        <span class="badge">🏆 +2.400 alunos formados</span>
+        <h2 class="display display-md">Sobre o <span class="highlight">professor</span></h2>
+        <h3 class="prof-name">Elton</h3>
+        <p class="prof-role">Ilustrador, Animador & Educador de Criação de Personagens</p>
+        <p>Com mais de <strong>12 anos de experiência</strong> em ilustração e design de personagens, Elton já criou centenas de mascotes para marcas e projetos no Brasil e no mundo.</p>
+        <p>Combina precisão técnica com uma didática acessível que já transformou a trajetória de mais de 2.400 alunos.</p>
+        <div class="prof-stats">
+          <div><strong>12+</strong><span>anos de experiência</span></div>
+          <div><strong>+2.400</strong><span>alunos formados</span></div>
+          <div><strong>500+</strong><span>personagens criados</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ALUNOS -->
+  <section id="alunos" class="section section-light">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Depoimentos</span>
+        <h2 class="display display-md">O que os <span class="highlight">alunos</span> dizem</h2>
+        <p class="lede center">Mais de 2.400 alunos já transformaram sua criatividade com o Fazdetoon.</p>
+      </div>
+      <div class="testimonials-grid">
+        <figure class="testimonial">
+          <div class="stars">★★★★★</div>
+          <blockquote>Nunca pensei que conseguiria criar um personagem profissional. Em 3 semanas, criei a mascote da minha empresa.</blockquote>
+          <figcaption><strong>Camila R.</strong><span>Empreendedora · São Paulo</span></figcaption>
+        </figure>
+        <figure class="testimonial">
+          <div class="stars">★★★★★</div>
+          <blockquote>Já tinha tentado outros cursos, mas nunca conseguia sair do papel. O Fazdetoon me deu a estrutura que faltava.</blockquote>
+          <figcaption><strong>Lucas M.</strong><span>Designer Freelancer · BH</span></figcaption>
+        </figure>
+        <figure class="testimonial">
+          <div class="stars">★★★★★</div>
+          <blockquote>O módulo de cores mudou minha vida. Sempre tive dificuldade com paletas — agora crio com total confiança.</blockquote>
+          <figcaption><strong>Ana P.</strong><span>Professora de Arte · Recife</span></figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- PREÇO -->
+  <section id="preco" class="section">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Investimento</span>
+        <h2 class="display display-md">Acesso completo por muito <span class="highlight">menos do que vale</span></h2>
+      </div>
+      <div class="pricing-card">
+        <h3>Fazdetoon Completo</h3>
+        <p class="muted">Acesso Total Vitalício</p>
+        <p class="price-old">De <s>R$ 497</s></p>
+        <p class="price-now"><span class="cur">R$</span> 97</p>
+        <p class="price-sub">ou 12× de R$ 9,97 · Acesso imediato após o pagamento</p>
+        <ul class="check-list">
+          <li>✓ 6 módulos completos com +59 aulas em vídeo</li>
+          <li>✓ Bônus: Animação Básica de Personagens (R$97)</li>
+          <li>✓ Bônus: Criando no iPad & Tablet (R$77)</li>
+          <li>✓ Bônus: Pack 50 Referências Visuais (R$47)</li>
+          <li>✓ Comunidade exclusiva no Discord</li>
+          <li>✓ Certificado de conclusão digital</li>
+          <li>✓ Acesso vitalício + atualizações futuras</li>
+        </ul>
+        <a href="#" class="btn btn-primary btn-lg btn-full">Começar agora <span class="arrow">→</span></a>
+        <p class="security">🔒 Compra 100% segura · SSL · Hotmart</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="section section-light">
+    <div class="container narrow">
+      <div class="section-head">
+        <span class="eyebrow">FAQ</span>
+        <h2 class="display display-md">Ficou com <span class="highlight">dúvidas</span>?</h2>
+      </div>
+      <div class="faq-list">
+        <details><summary>Preciso saber desenhar para fazer o curso?</summary><p>Não. O Fazdetoon foi criado para quem está começando do zero. O módulo 1 começa pelos fundamentos mais básicos.</p></details>
+        <details><summary>Precisa de software ou equipamento específico?</summary><p>Não. As aulas ensinam fundamentos que se aplicam em qualquer ferramenta — papel e lápis, tablet, iPad ou software.</p></details>
+        <details><summary>Por quanto tempo terei acesso?</summary><p>Vitalício. Você assiste quando quiser e tem acesso a todas as atualizações futuras sem custo adicional.</p></details>
+        <details><summary>Como funciona o pagamento e o acesso?</summary><p>Pagamento pela Hotmart, 100% seguro. Após a confirmação, o acesso chega imediatamente no seu e-mail.</p></details>
+        <details><summary>E se eu não gostar? Existe reembolso?</summary><p>Sim. Você tem 7 dias de garantia incondicional. Se não gostar, devolvemos 100% do valor pago.</p></details>
+        <details><summary>Posso usar os personagens comercialmente?</summary><p>Sim. Tudo que você criar é 100% seu — uso pessoal, comercial ou para clientes.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container footer-wrap">
+      <div class="brand"><span class="brand-dot"></span><span class="brand-name">FAZDETOON</span></div>
+      <nav class="footer-nav">
+        <a href="#">Privacidade</a><a href="#">Termos</a><a href="#">Contato</a><a href="#faq">FAQ</a>
+      </nav>
+      <p class="copyright">© 2025 Fazdetoon · v2 · GSAP frame sequence</p>
+    </div>
+  </footer>
+
+  <!-- Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js"></script>
+  <script src="assets/js/v2.js"></script>
+</body>
+</html>
