@@ -496,24 +496,22 @@
      this rule only positions the outer section. */
   .proof-clone {
     position: fixed;
-    bottom: 0;
+    top: 0; /* overridden by JS after measuring hero */
     left: 0;
     right: 0;
     z-index: 5;
     background: var(--bg-alt);
-    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
     padding: 2.25rem 0;
     opacity: 0;
     visibility: hidden;
-    transform: translateY(20px);
-    transition: opacity .35s ease, transform .35s ease, visibility 0s .35s;
+    transition: opacity .35s ease, visibility 0s .35s;
     pointer-events: none;
   }
   body.v2-locked .proof-clone {
     opacity: 1;
     visibility: visible;
-    transform: translateY(0);
-    transition: opacity .35s ease, transform .35s ease;
+    transition: opacity .35s ease;
   }
 
 
@@ -1817,6 +1815,16 @@
     proofClone.id = 'proof-clone';
     proofClone.classList.add('proof-clone');
     document.body.appendChild(proofClone);
+
+    // Position clone right below the pinned hero
+    const hero = document.getElementById('hero');
+    function positionClone() {
+      const bottom = hero.getBoundingClientRect().bottom;
+      proofClone.style.top = bottom + 'px';
+    }
+    positionClone();
+    window.addEventListener('resize', positionClone);
+
     const cloneCounters = proofClone.querySelectorAll('[data-counter-to]');
     cloneCounters.forEach((el) => updateCounter(el, 0));
 
