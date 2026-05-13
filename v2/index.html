@@ -66,7 +66,10 @@
     font-size: 1rem;
     line-height: 1.65;
     color: var(--text);
-    background: var(--bg);
+    /* v2 — pure white body so the strip above the hero (around the sticky
+       menu) matches the white #hero below. Menu keeps its own cream
+       background, so it stays visually distinct. */
+    background: #FFFFFF;
     overflow-x: hidden;
   }
 
@@ -344,14 +347,9 @@
     border-bottom: 1px solid var(--border);
   }
 
-  /* Subtle warm gradient blob */
-  #hero::before {
-    content: '';
-    position: absolute; top: -20%; right: -10%;
-    width: 55vmax; height: 55vmax;
-    background: radial-gradient(circle, rgba(245,208,0,.1) 0%, transparent 70%);
-    pointer-events: none;
-  }
+  /* v2 — gradient blob removed; the hero stays cleanly white behind the
+     scroll-driven canvas. */
+  #hero::before { content: none; }
 
   .hero-grid {
     display: grid;

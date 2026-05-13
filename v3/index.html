@@ -351,14 +351,9 @@
     min-height: 100vh;
   }
 
-  /* Subtle warm gradient blob */
-  #hero::before {
-    content: '';
-    position: absolute; top: -20%; right: -10%;
-    width: 55vmax; height: 55vmax;
-    background: radial-gradient(circle, rgba(245,208,0,.1) 0%, transparent 70%);
-    pointer-events: none;
-  }
+  /* v3 — gradient blob removed; the hero stays cleanly white behind the
+     scroll-driven canvas. */
+  #hero::before { content: none; }
 
   .hero-grid {
     display: grid;
