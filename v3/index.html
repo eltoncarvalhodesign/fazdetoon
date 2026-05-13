@@ -1756,13 +1756,13 @@
 
     let currentFrame = 0;
 
-    // v3 — canvas is fixed full-height. Shift the image DOWN inside the
-    // canvas so the full character drops below the sticky header overlay and
-    // the entire frame is visible inside the viewport. Positive Y_BIAS pushes
-    // the image lower; SCALE_BOOST below 1.0 shrinks it slightly so nothing
-    // gets cropped at the bottom near the proof clone.
-    const Y_BIAS = 0.25;
-    const SCALE_BOOST = 0.92;
+    // v3 — canvas is fixed full-height. SCALE_BOOST > 1 zooms the frame so
+    // the cat fills the canvas top-to-bottom (no empty gap between the
+    // illustration and the proof clone at the bottom of the viewport).
+    // Y_BIAS shifts the zoomed image slightly down so the hand at the very
+    // top of the source frame stays out of view behind the sticky header.
+    const Y_BIAS = 0.08;
+    const SCALE_BOOST = 1.25;
 
     const draw = (frameIdx) => {
       const idx = Math.max(0, Math.min(TOTAL_FRAMES - 1, Math.round(frameIdx)));
@@ -1817,6 +1817,13 @@
   async function boot() {
     const canvas = document.getElementById('hero-canvas');
     if (!canvas) return;
+
+    // v3 — relocate the canvas to be a direct child of <body> so it can
+    // never inherit a transformed/animated ancestor (ScrollTrigger pin
+    // spacer, .reveal animations, etc). position: fixed on the canvas
+    // is then guaranteed to anchor to the viewport, so the cat stays
+    // perfectly still while the user scrolls.
+    document.body.appendChild(canvas);
 
     // Load both sequences in parallel; show first frame as soon as v1 lands.
     const v1Promise = loadSequence('v1');
