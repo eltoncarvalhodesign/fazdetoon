@@ -1775,8 +1775,8 @@
     const decimals = parseInt(el.dataset.counterDecimals || '0', 10);
     const prefix = el.dataset.counterPrefix || '';
     const suffix = el.dataset.counterSuffix || '';
-    const eased = gsap.parseEase('power2.out')(progress);
-    const value = from + (to - from) * eased;
+    // Linear mapping so p=0.5 lands exactly at the midpoint of from→to.
+    const value = from + (to - from) * progress;
     el.textContent = prefix + formatValue(value, decimals) + suffix;
   }
 
@@ -1820,10 +1820,11 @@
     const heroProxy = { frame: 0 };
 
     // ONE big pin that scrubs:
-    //   p = 0   → 0.5 : video 1 frames 0  → 239, counters held at 0
-    //   p = 0.5 → 1.0 : video 2 frames 240→ 479, counters animate 0 → 1
-    // When p reaches 1, the last video 2 frame is drawn AND all four counters
-    // sit at their final values. Then the pin releases.
+    //   p = 0   → 0.5 : video 1 frames 0  → 239, counters 0   → 0.5 (halfway)
+    //   p = 0.5 → 1.0 : video 2 frames 240→ 479, counters 0.5 → 1.0 (final)
+    // Counters move linearly with overall scroll progress so they start at
+    // the very beginning of the animation, reach the midpoint exactly when
+    // video 1 ends, and finish at the last frame of video 2.
     ScrollTrigger.create({
       trigger: PIN_TARGET,
       start: 'top top',
@@ -1848,9 +1849,11 @@
           onUpdate: () => renderer.draw(heroProxy.frame),
         });
 
-        // Counter scrub — only the second half of the pin animates them, so
-        // counters start moving exactly when video 1 hands off to video 2.
-        const counterProgress = Math.max(0, Math.min(1, (p - 0.5) / 0.5));
+        // Counter scrub — moves linearly with the entire pin progress so
+        // numbers begin animating from frame 0, hit the midpoint at the end
+        // of video 1, and land at the final values on the last frame of
+        // video 2.
+        const counterProgress = p;
         realCounters.forEach((el) => updateCounter(el, counterProgress));
         cloneCounters.forEach((el) => updateCounter(el, counterProgress));
       },
