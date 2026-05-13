@@ -435,6 +435,14 @@
     isolation: auto !important;
   }
 
+  /* Hide the canvas after the GSAP pin releases. The pinned element would
+     otherwise reappear at the end of the pin spacer and look like the hero
+     scrolled twice. */
+  body.v2-after-lock .hero-cat-canvas {
+    opacity: 0;
+    visibility: hidden;
+  }
+
   /* Floating badges */
   .hero-badge {
     position: absolute;
@@ -1698,6 +1706,9 @@
   gsap.ticker.lagSmoothing(0);
 
   // ─── Frame preload ───
+  // Cache-bust so browsers fetch the newly extracted JPGs after each video
+  // upload instead of serving stale frames.
+  const FRAME_VERSION = '3';
   function loadSequence(slug) {
     const imgs = new Array(FRAME_COUNT_PER_VIDEO);
     return Promise.all(
@@ -1706,7 +1717,7 @@
           const img = new Image();
           img.decoding = 'async';
           img.onload = img.onerror = () => resolve();
-          img.src = `assets/frames/${slug}/${String(i + 1).padStart(4, '0')}.jpg`;
+          img.src = `assets/frames/${slug}/${String(i + 1).padStart(4, '0')}.jpg?v=${FRAME_VERSION}`;
           imgs[i] = img;
         });
       })
@@ -1835,6 +1846,16 @@
       anticipatePin: 1,
       onToggle(self) {
         document.body.classList.toggle('v2-locked', self.isActive);
+      },
+      // After the pin releases, the pinned element (canvas on mobile) would
+      // otherwise reappear at its natural in-flow position, which sits right
+      // at the end of the pin spacer — making the hero look like it scrolls
+      // again. Hide it instead so the page flows straight into #proof.
+      onLeave() {
+        document.body.classList.add('v2-after-lock');
+      },
+      onEnterBack() {
+        document.body.classList.remove('v2-after-lock');
       },
       onUpdate(self) {
         const p = self.progress;
