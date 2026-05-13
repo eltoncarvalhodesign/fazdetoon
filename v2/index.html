@@ -343,7 +343,7 @@
   #hero {
     padding: 9rem 0 0;
     background: #FFFFFF;
-    position: relative; overflow: hidden;
+    position: relative;
     border-bottom: 1px solid var(--border);
   }
 
@@ -1843,7 +1843,7 @@
       scrub: 0.4,
       anticipatePin: 1,
       onToggle(self) {
-        document.body.classList.toggle('v2-locked', self.isActive);
+        document.body.classList.toggle('v2-locked', self.isActive && self.progress > 0);
       },
       // No onLeave hide here: the user wants the canvas to stay visible,
       // paused on the last frame, after the pin releases. The canvas will
