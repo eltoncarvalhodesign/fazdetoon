@@ -428,12 +428,8 @@
     transition: opacity .3s ease;
   }
 
-  /* When the user scrolls past #hero into the rest of the page, fade the
-     canvas out so it doesn't overlay subsequent sections that have a
-     different background. */
-  body.v3-past-hero .hero-cat-canvas {
-    opacity: 0;
-  }
+  /* (Removed body.v3-past-hero fade — the canvas now stays visible on its
+     last frame permanently after the pin releases, per user request.) */
 
   /* The hero-visual cell is just a layout placeholder now — the actual canvas
      above is fixed to the viewport, not anchored to this grid cell. */
@@ -1867,6 +1863,11 @@
       start: 'top top',
       end: `+=${TOTAL_SCROLL_PX}`,
       pin: PIN_TARGET,
+      // v3 — pin via position: fixed so the pinned ancestor doesn't create
+      // a transform-based containing block. Without this, the canvas (also
+      // position: fixed) re-anchors to #hero and translates with the page
+      // as the user scrolls.
+      pinType: 'fixed',
       pinSpacing: true,
       scrub: 0.4,
       anticipatePin: 1,
@@ -1896,16 +1897,10 @@
       },
     });
 
-    // v3 — fade the fixed-background canvas out once the user scrolls past
-    // the hero/proof stage. Without this, the canvas would keep overlaying
-    // subsequent sections (which have non-white backgrounds) and look broken.
-    ScrollTrigger.create({
-      trigger: '#proof',
-      start: 'top 70%',
-      end: 'top 20%',
-      onEnter: () => document.body.classList.add('v3-past-hero'),
-      onLeaveBack: () => document.body.classList.remove('v3-past-hero'),
-    });
+    // (Removed v3-past-hero fade-out — the canvas now stays visible on its
+    // last frame after the pin releases. It remains fixed at top-right of
+    // the viewport so the final cat illustration sits there permanently
+    // while the user keeps scrolling.)
 
     // Sequence #2 arrives a moment later; once it's here, the back half of the
     // pin starts drawing real frames instead of falling through.

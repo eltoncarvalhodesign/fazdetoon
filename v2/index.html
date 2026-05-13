@@ -433,13 +433,9 @@
     isolation: auto !important;
   }
 
-  /* Hide the canvas after the GSAP pin releases. The pinned element would
-     otherwise reappear at the end of the pin spacer and look like the hero
-     scrolled twice. */
-  body.v2-after-lock .hero-cat-canvas {
-    opacity: 0;
-    visibility: hidden;
-  }
+  /* (Removed body.v2-after-lock rule — the user wants the canvas to stay
+     visible on its last frame after the pin releases, then scroll up
+     naturally with the rest of #hero.) */
 
   /* Floating badges */
   .hero-badge {
@@ -1845,16 +1841,9 @@
       onToggle(self) {
         document.body.classList.toggle('v2-locked', self.isActive);
       },
-      // After the pin releases, the pinned element (canvas on mobile) would
-      // otherwise reappear at its natural in-flow position, which sits right
-      // at the end of the pin spacer — making the hero look like it scrolls
-      // again. Hide it instead so the page flows straight into #proof.
-      onLeave() {
-        document.body.classList.add('v2-after-lock');
-      },
-      onEnterBack() {
-        document.body.classList.remove('v2-after-lock');
-      },
+      // No onLeave hide here: the user wants the canvas to stay visible,
+      // paused on the last frame, after the pin releases. The canvas will
+      // scroll up naturally with the rest of #hero into #proof.
       onUpdate(self) {
         const p = self.progress;
 
