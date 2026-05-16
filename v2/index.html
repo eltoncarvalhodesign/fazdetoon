@@ -340,11 +340,21 @@
   /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
      HERO
   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+  /* Wrapper hero+proof ocupa exatamente 100vh e fica pinado pelo GSAP */
+  #hero-proof-wrap {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
   #hero {
-    padding: 9rem 0 0;
+    flex: 1;
+    min-height: 0;
+    padding: 0;
     background: #FFFFFF;
     position: relative;
-    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
   }
 
   /* v2 — gradient blob removed; the hero stays cleanly white behind the
@@ -491,28 +501,6 @@
   .proof-sep { width: 1px; height: 44px; background: var(--border); }
   @media (max-width: 480px) { .proof-sep { display: none; } .proof-inner { gap: 2rem; } }
 
-  /* v2 — proof clone fixed at the bottom of the viewport while the GSAP
-     scroll lock is active. Inherits .proof-* inner styles from the clone tree;
-     this rule only positions the outer section. */
-  .proof-clone {
-    position: fixed;
-    top: 0; /* overridden by JS after measuring hero */
-    left: 0;
-    right: 0;
-    z-index: 5;
-    background: var(--bg-alt);
-    border-bottom: 1px solid var(--border);
-    padding: 2.25rem 0;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity .35s ease, visibility 0s .35s;
-    pointer-events: none;
-  }
-  body.v2-locked .proof-clone {
-    opacity: 1;
-    visibility: visible;
-    transition: opacity .35s ease;
-  }
 
 
   /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -1030,8 +1018,9 @@
 </nav>
 
 <!-- ═══════════════════════════════════════
-     § 1 — HERO
+     § 1 — HERO + PROOF (pinned together = 100vh)
 ═══════════════════════════════════════ -->
+<div id="hero-proof-wrap">
 <section id="hero">
   <div class="wrap">
     <div class="hero-grid">
@@ -1104,6 +1093,8 @@
     </div>
   </div>
 </section>
+
+</div><!-- /#hero-proof-wrap -->
 
 <!-- ═══════════════════════════════════════
      § 3 — PAIN
@@ -1805,61 +1796,22 @@
     const realCounters = document.querySelectorAll('#proof [data-counter-to]');
     realCounters.forEach((el) => updateCounter(el, 0));
 
-    // Build a clone of the proof bar that's fixed to the bottom of the
-    // viewport while the GSAP lock is active. The CSS class body.v2-locked
-    // fades it in. Counters in the clone are driven by the same scroll
-    // progress, so when the lock ends the clone fades out at 100% and the
-    // real proof bar already shows the final values directly below.
-    const proofOriginal = document.getElementById('proof');
-    const proofClone = proofOriginal.cloneNode(true);
-    proofClone.id = 'proof-clone';
-    proofClone.classList.add('proof-clone');
-    document.body.appendChild(proofClone);
-
-    // Position clone right below the pinned hero
-    const hero = document.getElementById('hero');
-    function positionClone() {
-      const bottom = hero.getBoundingClientRect().bottom;
-      proofClone.style.top = bottom + 'px';
-    }
-    positionClone();
-    window.addEventListener('resize', positionClone);
-
-    const cloneCounters = proofClone.querySelectorAll('[data-counter-to]');
-    cloneCounters.forEach((el) => updateCounter(el, 0));
-
-    // Mobile pins only the canvas (heading + CTAs above are already scrolled
-    // out of view by the time the lock engages). Desktop pins the whole #hero
-    // so both text column and canvas stay locked together.
-    const isMobileLayout = window.matchMedia('(max-width: 860px)').matches;
-    const PIN_TARGET = isMobileLayout ? '.hero-visual' : '#hero';
-    const TOTAL_SCROLL_PX = 3000; // 1500px video1 + 1500px (video2 || counters)
+    // Pin the wrapper (#hero-proof-wrap = 100vh) so hero + proof bar
+    // stay together as one unit during the scroll animation.
+    const TOTAL_SCROLL_PX = 3000;
     const heroProxy = { frame: 0 };
 
-    // ONE big pin that scrubs:
-    //   p = 0   → 0.5 : video 1 frames 0  → 239, counters 0   → 0.5 (halfway)
-    //   p = 0.5 → 1.0 : video 2 frames 240→ 479, counters 0.5 → 1.0 (final)
-    // Counters move linearly with overall scroll progress so they start at
-    // the very beginning of the animation, reach the midpoint exactly when
-    // video 1 ends, and finish at the last frame of video 2.
     ScrollTrigger.create({
-      trigger: PIN_TARGET,
+      trigger: '#hero-proof-wrap',
       start: 'top top',
       end: `+=${TOTAL_SCROLL_PX}`,
-      pin: PIN_TARGET,
+      pin: '#hero-proof-wrap',
       pinSpacing: true,
       scrub: 0.4,
       anticipatePin: 1,
-      onToggle(self) {
-        document.body.classList.toggle('v2-locked', self.isActive && self.progress > 0);
-      },
-      // No onLeave hide here: the user wants the canvas to stay visible,
-      // paused on the last frame, after the pin releases. The canvas will
-      // scroll up naturally with the rest of #hero into #proof.
       onUpdate(self) {
         const p = self.progress;
 
-        // Frame scrub — covers the full 480-frame range over the entire pin.
         const targetFrame = p * (TOTAL_FRAMES - 1);
         gsap.to(heroProxy, {
           frame: targetFrame,
@@ -1869,13 +1821,7 @@
           onUpdate: () => renderer.draw(heroProxy.frame),
         });
 
-        // Counter scrub — moves linearly with the entire pin progress so
-        // numbers begin animating from frame 0, hit the midpoint at the end
-        // of video 1, and land at the final values on the last frame of
-        // video 2.
-        const counterProgress = p;
-        realCounters.forEach((el) => updateCounter(el, counterProgress));
-        cloneCounters.forEach((el) => updateCounter(el, counterProgress));
+        realCounters.forEach((el) => updateCounter(el, p));
       },
     });
 
@@ -1886,17 +1832,9 @@
       ScrollTrigger.refresh();
     });
 
-    // Re-evaluate pin geometry on resize so the mobile/desktop boundary stays
-    // correct when the user rotates a device.
-    let lastIsMobile = isMobileLayout;
+    // Re-evaluate pin geometry on resize.
     window.addEventListener('resize', () => {
-      const nowMobile = window.matchMedia('(max-width: 860px)').matches;
-      if (nowMobile !== lastIsMobile) {
-        lastIsMobile = nowMobile;
-        window.location.reload();
-      } else {
-        ScrollTrigger.refresh();
-      }
+      ScrollTrigger.refresh();
     }, { passive: true });
 
     // Settle pin spacing once images and fonts have layout-shifted.
